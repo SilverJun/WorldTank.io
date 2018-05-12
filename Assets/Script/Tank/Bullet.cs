@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -14,17 +12,17 @@ public class Bullet : MonoBehaviour
         _rigid.velocity = transform.right.normalized * _bulletSpeed;
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("FieldObject"))
         {
             Destroy(gameObject);
         }
-        else if (other.gameObject.CompareTag("Tank"))
-        {
-            Destroy(gameObject);
-        }
+        //else if (other.gameObject.CompareTag("Tank"))
+        //{
+        //    Destroy(gameObject);
+        //}
         else if (other.gameObject.CompareTag("Wall"))
         {
             Destroy(gameObject);
