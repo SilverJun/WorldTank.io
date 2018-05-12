@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212675738599854682}
   m_Layer: 0
   m_Name: Barrel
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 61463761462381772}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 50584580167321270}
   m_Layer: 0
   m_Name: NormalTank
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,11 +159,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
+  _hpObject: {fileID: 0}
   _barrel: {fileID: 1067699049498818}
   _body: {fileID: 1252147172499180}
+  _hp: 100
   _barrelRotateSpeed: 1
   _bodyRotateSpeed: 2
-  _tankSpeed: 7
+  _tankSpeed: 6
+  _shootDelay: 1
 --- !u!212 &212346095675183308
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -3,6 +3,7 @@
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10.0f;
+    [SerializeField] private int _damage = 40;
     private Rigidbody2D _rigid;
     private static GameObject _explosion = null;
 
@@ -16,6 +17,8 @@ public class Bullet : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
         _rigid.velocity = transform.right.normalized * _bulletSpeed;
     }
+
+    public int GetDamage() { return _damage; }
 
     void OnTriggerEnter2D(Collider2D other)
     {

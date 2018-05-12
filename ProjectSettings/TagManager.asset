@@ -57,9 +57,9 @@ TagManager:
   - name: Barrel
     uniqueID: 793209303
     locked: 0
-  - name: FX
-    uniqueID: 177723145
-    locked: 0
   - name: FieldObject
     uniqueID: 1879355673
+    locked: 0
+  - name: FX
+    uniqueID: 177723145
     locked: 0
