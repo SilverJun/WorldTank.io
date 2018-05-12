@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Bullet
+  - Tank
+  - Wall
+  - FieldObject
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1082486215
+    locked: 0
+  - name: Object
+    uniqueID: 901861255
+    locked: 0
+  - name: TankBody
+    uniqueID: 2506982605
+    locked: 0
+  - name: Barrel
+    uniqueID: 793209303
+    locked: 0
+  - name: FX
+    uniqueID: 177723145
+    locked: 0
+  - name: FieldObject
+    uniqueID: 1879355673
+    locked: 0
