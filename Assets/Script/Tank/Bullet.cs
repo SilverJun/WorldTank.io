@@ -4,8 +4,13 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10.0f;
     private Rigidbody2D _rigid;
+    private static GameObject _explosion = null;
 
-    // Use this for initialization
+    void Awake()
+    {
+        _explosion = Resources.Load<GameObject>("Prefabs/Explosion");
+    }
+    
     void Start ()
     {
         _rigid = GetComponent<Rigidbody2D>();
@@ -14,17 +19,19 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("FieldObject"))
         {
+            Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         //else if (other.gameObject.CompareTag("Tank"))
         //{
+        //    Instantiate(_explosion, transform.position, Quaternion.identity);
         //    Destroy(gameObject);
         //}
         else if (other.gameObject.CompareTag("Wall"))
         {
+            Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
