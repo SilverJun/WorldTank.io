@@ -113,6 +113,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &167914468
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4044059329991118, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114529289677113974, guid: 4d6a1818b17e8b54eae1c162f8295546,
+        type: 2}
+      propertyPath: viewIdField
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114529289677113974, guid: 4d6a1818b17e8b54eae1c162f8295546,
+        type: 2}
+      propertyPath: instantiationId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793011374670996, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4d6a1818b17e8b54eae1c162f8295546, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &397867935
 Prefab:
   m_ObjectHideFlags: 0
@@ -1927,22 +1983,22 @@ Prefab:
       propertyPath: ObservedComponents.Array.data[3]
       value: 
       objectReference: {fileID: 1266769865}
-    - target: {fileID: 114681109553310742, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114681109553310742, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114681109553310742, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114681109553310742, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 3
@@ -1956,21 +2012,6 @@ Prefab:
         type: 2}
       propertyPath: instantiationId
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376201495698880, guid: c93149ab9e50abe4c952b87dfac75621,
-        type: 2}
-      propertyPath: m_PositionModel.SynchronizeEnabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114376201495698880, guid: c93149ab9e50abe4c952b87dfac75621,
-        type: 2}
-      propertyPath: m_RotationModel.SynchronizeEnabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114947200644991000, guid: c93149ab9e50abe4c952b87dfac75621,
-        type: 2}
-      propertyPath: m_ScaleModel.SynchronizeEnabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1762137556384996, guid: c93149ab9e50abe4c952b87dfac75621, type: 2}
       propertyPath: m_IsActive
@@ -1979,73 +2020,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c93149ab9e50abe4c952b87dfac75621, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2104005174 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1762137556384996, guid: c93149ab9e50abe4c952b87dfac75621,
-    type: 2}
-  m_PrefabInternal: {fileID: 2104005173}
---- !u!114 &2104005175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2104005174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    InterpolateMoveTowardsAcceleration: 2
-    InterpolateMoveTowardsDeceleration: 2
-    InterpolateSpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: -1
-        value: 0
-        inSlope: 0
-        outSlope: Infinity
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 4
-        value: 4
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
