@@ -27,33 +27,27 @@ public class Tank : MonoBehaviour
     [SerializeField] private float _shootDelay = 1.0f;
     private bool _isShoot = false;
     private bool _isDie = false;
-
-    void Awake()
-    {
-        //_bullet = Resources.Load<GameObject>("Prefabs/Bullet");
-        //_hpObject = Resources.Load<GameObject>("Prefabs/HP");
-    }
     
     void Start ()
     {
 		_hp = _maxHP;
 
-		_camera = GameObject.FindWithTag("MainCamera");
+        _photonView = GetComponent<PhotonView>();
+        _camera = GameObject.FindWithTag("MainCamera");
         _rigid = GetComponent<Rigidbody2D>();
 		_barrel = transform.Find("Barrel").gameObject;
         _body = transform.Find("Body").gameObject;
-		_photonView = GetComponent<PhotonView>();
 		_hpObject = PhotonNetwork.Instantiate("Prefabs/HP", transform.position, Quaternion.identity, 0);
 		_hpScript = _hpObject.GetComponent<HP>();
+        _photonView.ObservedComponents.Add(_hpObject.transform);
 		_hpScript.SetFollowObject(transform);
         _hpScript.SetHP(_maxHP);
-		_photonView.ObservedComponents.Add(_hpObject.transform);
     }
 	
 	void FixedUpdate ()
 	{
 		if (_isDie)
-			Destroy(gameObject);
+		    PhotonNetwork.Destroy(gameObject);
 
 	    if (_hp <= 0)
         {
@@ -123,13 +117,12 @@ public class Tank : MonoBehaviour
             var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
             _hp -= damage;
             _hpScript.UpdateHP(_hp);
-			Destroy(other.gameObject);
-            Debug.Log("Bullet 맞음.");
+            PhotonNetwork.Destroy(other.gameObject);
         }
     }
 
 	private void OnDestroy()
 	{
-		Destroy(_hpObject);
+	    PhotonNetwork.Destroy(_hpObject);
 	}
 }

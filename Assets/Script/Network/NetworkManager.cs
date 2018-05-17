@@ -9,6 +9,7 @@ public class NetworkManager : Photon.PunBehaviour
 	private void Awake()
 	{
 		PhotonNetwork.ConnectUsingSettings("0.1");
+        Screen.SetResolution(1280, 720, false);
 	}
 
 	void Start () {
@@ -35,11 +36,16 @@ public class NetworkManager : Photon.PunBehaviour
 		Debug.Log("successed to join world!");
 
 		// player의 탱크를 instantiate한다.
-		var player = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
-    }
+		PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
+	}
     
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
 	{
 		Debug.Log(codeAndMsg);
 	}
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
+    }
 }

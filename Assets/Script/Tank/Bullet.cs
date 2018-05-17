@@ -36,16 +36,16 @@ public class Bullet : MonoBehaviour
 		if (other.gameObject.CompareTag("FieldObject"))
 		{
 			PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
-			Destroy(gameObject);
+		    PhotonNetwork.Destroy(gameObject);
 		}
 		else if (other.gameObject.CompareTag("Tank"))
 		{
-			Instantiate(_explosion, transform.position, Quaternion.identity);
+		    PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
 		}
 		else if (other.gameObject.CompareTag("Wall"))
 		{
 			PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
-			Destroy(gameObject);
+		    PhotonNetwork.Destroy(gameObject);
 		}
 	}
 }

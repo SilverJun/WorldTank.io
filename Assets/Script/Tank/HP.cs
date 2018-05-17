@@ -15,8 +15,11 @@ public class HP : MonoBehaviour
     }
 
     void Update ()
-	{
-	    transform.position = _object.transform.position - new Vector3(0.0f, 0.7f, 0.0f);
+    {
+        if (!GetComponent<PhotonView>().isMine)
+            return;
+
+        transform.position = _object.transform.position - new Vector3(0.0f, 0.7f, 0.0f);
     }
 
 	public void SetFollowObject(Transform obj)
