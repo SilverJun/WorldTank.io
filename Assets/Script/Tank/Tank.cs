@@ -6,8 +6,6 @@ using DG.Tweening;
 public class Tank : Photon.MonoBehaviour
 {
     [SerializeField] private GameObject _camera;
-    [SerializeField] private GameObject _hpObject;  //prefab
-    private HP _hpScript;
     [SerializeField] private GameObject _barrel;
     [SerializeField] private GameObject _body;
 
@@ -18,55 +16,52 @@ public class Tank : Photon.MonoBehaviour
 
 	private PhotonView _photonView;
 
-	//private Vector3 _curPos;
-	//private Quaternion _curQuat;
-
     // data
-    [SerializeField] private const int _maxHP = 100;
-    [SerializeField] private int _hp;
     [SerializeField] private float _barrelRotateSpeed = 1.0f;
     [SerializeField] private float _bodyRotateSpeed = 1.0f;
     [SerializeField] private float _tankSpeed = 5.0f;
     [SerializeField] private float _shootDelay = 1.0f;
+    [SerializeField] private int _hp;
+    [SerializeField] private int _maxHP = 100;
     private bool _isShoot = false;
     private bool _isDie = false;
-    
+
+    public int Hp
+    {
+        get
+        {
+            return _hp;
+        }
+    }
+
     void Start ()
     {
-		_hp = _maxHP;
+        _hp = _maxHP;
 
         _photonView = GetComponent<PhotonView>();
         _camera = GameObject.FindWithTag("MainCamera");
         _rigid = GetComponent<Rigidbody2D>();
 		_barrel = transform.Find("Barrel").gameObject;
         _body = transform.Find("Body").gameObject;
-		_hpObject = NetworkManager.HP;
-
-        _hpScript = _hpObject.GetComponent<HP>();
-
-		if (_photonView.isMine)
-		{
-			_hpScript.SetFollowObject(transform);
-			_hpScript.SetHP(_maxHP);
-		}
     }
-	
-	void FixedUpdate ()
-	{
-		if (_isDie)
-		    PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
 
-	    if (_hp <= 0)
-        {
-	        _isDie = true;
-            return;
-        }
+    void FixedUpdate ()
+	{
 		if (!_photonView.isMine)
 		{
 			//transform.position = _curPos;
 			//transform.rotation = _curQuat;
 			return;
 		}
+
+	    if (_isDie)
+	        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
+
+	    if (_hp <= 0)
+	    {
+	        _isDie = true;
+	        return;
+	    }
 
         _camera.transform.position = new Vector3(transform.position.x, transform.position.y, _camera.transform.position.z);
 
@@ -77,8 +72,7 @@ public class Tank : Photon.MonoBehaviour
 	    if (!_isShoot && Input.GetMouseButtonDown(0))
 	    {
             // 총알이랑 바렐이랑 보고있는 방향이 달라서 차이값만큼 보정
-	        var bullet = PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
-			bullet.GetComponent<Bullet>().SetOwner(gameObject);
+	        PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
 	        _isShoot = true;
 	        StartCoroutine(_reloadBullet()); // 재장전
 	    }
@@ -122,20 +116,15 @@ public class Tank : Photon.MonoBehaviour
     {
 		if (other.gameObject.CompareTag("Bullet"))
         {
-            if (other.gameObject.GetComponent<Bullet>().GetOwner() == gameObject)
+            if (gameObject == other.gameObject.GetComponent<Bullet>().GetOwner())
 				return;
 
+            Debug.Log("Hit by other bullet!");
             var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
             _hp -= damage;
-            _hpScript.UpdateHP(_hp);
-            PhotonNetwork.Destroy(other.gameObject);
+            _photonView.RPC("NetworkDestroy", PhotonTargets.All, _photonView.viewID);
         }
     }
-
-	private void OnDestroy()
-	{
-	    PhotonNetwork.Destroy(_hpObject);
-	}
 
 	//void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
    // {

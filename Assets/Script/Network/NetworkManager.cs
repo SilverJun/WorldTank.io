@@ -38,8 +38,12 @@ public class NetworkManager : Photon.PunBehaviour
 
 		// player의 탱크를 instantiate한다.
 		Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
-		HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
-	}
+	    HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
+	    Tank.name = "PlayerClientTank";
+	    HP.name = "PlayerClientHP";
+        Debug.Log(Tank);
+	    Debug.Log(HP);
+    }
     
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
 	{
