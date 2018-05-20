@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Tank : MonoBehaviour
+public class Tank : Photon.MonoBehaviour
 {
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _hpObject;  //prefab
@@ -17,6 +17,9 @@ public class Tank : MonoBehaviour
     private Vector3 _worldBarrelPos;
 
 	private PhotonView _photonView;
+
+	//private Vector3 _curPos;
+	//private Quaternion _curQuat;
 
     // data
     [SerializeField] private const int _maxHP = 100;
@@ -37,17 +40,21 @@ public class Tank : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
 		_barrel = transform.Find("Barrel").gameObject;
         _body = transform.Find("Body").gameObject;
-		_hpObject = PhotonNetwork.Instantiate("Prefabs/HP", transform.position, Quaternion.identity, 0);
-		_hpScript = _hpObject.GetComponent<HP>();
-        _photonView.ObservedComponents.Add(_hpObject.transform);
-		_hpScript.SetFollowObject(transform);
-        _hpScript.SetHP(_maxHP);
+		_hpObject = NetworkManager.HP;
+
+        _hpScript = _hpObject.GetComponent<HP>();
+
+		if (_photonView.isMine)
+		{
+			_hpScript.SetFollowObject(transform);
+			_hpScript.SetHP(_maxHP);
+		}
     }
 	
 	void FixedUpdate ()
 	{
 		if (_isDie)
-		    PhotonNetwork.Destroy(gameObject);
+		    PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
 
 	    if (_hp <= 0)
         {
@@ -55,8 +62,12 @@ public class Tank : MonoBehaviour
             return;
         }
 		if (!_photonView.isMine)
+		{
+			//transform.position = _curPos;
+			//transform.rotation = _curQuat;
 			return;
-		
+		}
+
         _camera.transform.position = new Vector3(transform.position.x, transform.position.y, _camera.transform.position.z);
 
         LookBarrelMouse();
@@ -125,4 +136,20 @@ public class Tank : MonoBehaviour
 	{
 	    PhotonNetwork.Destroy(_hpObject);
 	}
+
+	//void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+   // {
+   //     if (stream.isWriting)
+   //     {
+   //         //We own this player: send the others our data
+   //         stream.SendNext(transform.position);
+   //         stream.SendNext(transform.rotation);
+   //     }
+   //     else
+   //     {
+   //         //Network player, receive data
+			//_curPos = (Vector3)stream.ReceiveNext();
+			//_curQuat = (Quaternion)stream.ReceiveNext();
+    //    }
+    //}
 }

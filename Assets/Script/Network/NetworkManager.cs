@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NetworkManager : Photon.PunBehaviour 
-{   
+{
+	public static GameObject Tank;
+	public static GameObject HP;
 
 	// Use this for initialization
 	private void Awake()
@@ -28,7 +30,6 @@ public class NetworkManager : Photon.PunBehaviour
         //roomOptions.customRoomProperties = new Hashtable() { { "map", 1 } };
         //roomOptions.maxPlayers = 20;
 		PhotonNetwork.JoinOrCreateRoom("WorldTank", null, null);
-
 	}
 
 	public override void OnJoinedRoom()
@@ -36,7 +37,8 @@ public class NetworkManager : Photon.PunBehaviour
 		Debug.Log("successed to join world!");
 
 		// player의 탱크를 instantiate한다.
-		PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
+		Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
+		HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
 	}
     
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)

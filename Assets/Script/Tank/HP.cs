@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HP : MonoBehaviour
+public class HP : Photon.PunBehaviour
 {
     [SerializeField] private Transform _object;
     [SerializeField] private GameObject _hpGauge;
+	private PhotonView _photonView;
 
     private int _maxHP;
 
     private void Start()
     {
         _hpGauge.GetComponent<SpriteRenderer>().color = Color.green;
+		_photonView = GetComponent<PhotonView>();
     }
 
     void Update ()
     {
-        if (!GetComponent<PhotonView>().isMine)
+        if (!_photonView.isMine)
             return;
 
         transform.position = _object.transform.position - new Vector3(0.0f, 0.7f, 0.0f);
