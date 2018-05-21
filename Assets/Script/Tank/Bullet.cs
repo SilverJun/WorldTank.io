@@ -4,7 +4,7 @@ public class Bullet : Photon.PunBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10.0f;
     [SerializeField] private int _damage = 40;
-	private GameObject _owner;
+    private int _viewID;
     private Rigidbody2D _rigid;
     private PhotonView _photonView;
 
@@ -13,15 +13,22 @@ public class Bullet : Photon.PunBehaviour
         _rigid = GetComponent<Rigidbody2D>();
         _rigid.velocity = transform.right.normalized * _bulletSpeed;
         _photonView = GetComponent<PhotonView>();
-        Debug.Log("Bullet Owner");
-        Debug.Log(NetworkManager.Tank);
-        _owner = NetworkManager.Tank;
 
         if (_photonView.isMine)
+        {
             GetComponent<CapsuleCollider2D>().enabled = true;
+            _viewID = NetworkManager.Tank.GetComponent<PhotonView>().viewID;
+            _photonView.RPC("SetOwner", PhotonTargets.All, _viewID);
+        }
     }
-    
-	public GameObject GetOwner() { return _owner; }
+
+    [PunRPC]
+    public void SetOwner(int viewID)
+    {
+        _viewID = viewID;
+    }
+
+	public int GetOwner() { return _viewID; }
 
     public int GetDamage() { return _damage; }
 
@@ -30,16 +37,6 @@ public class Bullet : Photon.PunBehaviour
         if (!_photonView.isMine)
             return;
 
-        if (_owner.gameObject == other.gameObject)
-			return;
-
-        Debug.Log("Collision!----");
-        Debug.Log("Owner");
-        Debug.Log(_owner.gameObject);
-        Debug.Log("Other");
-        Debug.Log(other.gameObject);
-        Debug.Log("--------------");
-
         if (other.gameObject.CompareTag("FieldObject"))
 		{
 			PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
@@ -47,6 +44,8 @@ public class Bullet : Photon.PunBehaviour
 		}
 		else if (other.gameObject.CompareTag("Tank"))
 		{
+		    if (_viewID == other.GetComponent<PhotonView>().viewID)
+		        return;
             Debug.Log("Tank Hit!");
 		    PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
             PhotonNetwork.Destroy(gameObject);

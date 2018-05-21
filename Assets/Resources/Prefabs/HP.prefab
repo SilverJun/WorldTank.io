@@ -269,7 +269,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+    InterpolateLerpSpeed: 10
 --- !u!212 &212011669373428092
 SpriteRenderer:
   m_ObjectHideFlags: 1

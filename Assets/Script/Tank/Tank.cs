@@ -34,10 +34,13 @@ public class Tank : Photon.MonoBehaviour
         }
     }
 
-    void Start ()
+    private void Awake()
     {
         _hp = _maxHP;
+    }
 
+    void Start ()
+    {
         _photonView = GetComponent<PhotonView>();
         _camera = GameObject.FindWithTag("MainCamera");
         _rigid = GetComponent<Rigidbody2D>();
@@ -116,14 +119,22 @@ public class Tank : Photon.MonoBehaviour
     {
 		if (other.gameObject.CompareTag("Bullet"))
         {
-            if (gameObject == other.gameObject.GetComponent<Bullet>().GetOwner())
+            Debug.Log("Tank Trigger Entered!");
+            if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
 				return;
 
             Debug.Log("Hit by other bullet!");
             var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
-            _hp -= damage;
-            _photonView.RPC("NetworkDestroy", PhotonTargets.All, _photonView.viewID);
+            _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
+            Debug.Log(_hp);
         }
+    }
+
+    [PunRPC]
+    void DamageHP(int damage, int viewID)
+    {
+        if (_photonView.viewID == viewID)
+            _hp -= damage;
     }
 
 	//void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

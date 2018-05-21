@@ -19,12 +19,19 @@ public class HP : Photon.PunBehaviour
         {
             _object = NetworkManager.Tank.GetComponent<Tank>();
             _maxHP = _object.Hp;
-            Debug.Log(_object);
         }
     }
 
     void Update ()
     {
+        if (_hpGauge.transform.localScale.x < 0.3f)
+            _hpGauge.GetComponent<SpriteRenderer>().color = Color.red;
+        else if (_hpGauge.transform.localScale.x < 0.7f)
+            _hpGauge.GetComponent<SpriteRenderer>().color = Color.yellow;
+        else
+            _hpGauge.GetComponent<SpriteRenderer>().color = Color.green;
+
+        
         if (!_photonView.isMine)
             return;
 
@@ -32,14 +39,5 @@ public class HP : Photon.PunBehaviour
 
         _mapValue = _object.Hp / (float)_maxHP;
         _hpGauge.transform.localScale = new Vector3(_mapValue, 1.0f, 1.0f);
-
-        Debug.Log(_object.Hp);
-
-        if (_mapValue < 0.3f)
-            _hpGauge.GetComponent<SpriteRenderer>().color = Color.red;
-        else if (_mapValue < 0.7f)
-            _hpGauge.GetComponent<SpriteRenderer>().color = Color.yellow;
-        else
-            _hpGauge.GetComponent<SpriteRenderer>().color = Color.green;
     }
 }
