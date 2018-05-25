@@ -10,7 +10,6 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _body;
 
     private Rigidbody2D _rigid;
-    private GameObject _bullet;
 
     private Vector3 _worldBarrelPos;
 
@@ -23,8 +22,8 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private float _shootDelay = 1.0f;
     [SerializeField] private int _hp;
     [SerializeField] private int _maxHP = 100;
-    private bool _isShoot = false;
-    private bool _isDie = false;
+    private bool _isShoot;
+    private bool _isDie;
 
     public int Hp
     {
@@ -137,19 +136,4 @@ public class Tank : Photon.MonoBehaviour
             _hp -= damage;
     }
 
-	//void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-   // {
-   //     if (stream.isWriting)
-   //     {
-   //         //We own this player: send the others our data
-   //         stream.SendNext(transform.position);
-   //         stream.SendNext(transform.rotation);
-   //     }
-   //     else
-   //     {
-   //         //Network player, receive data
-			//_curPos = (Vector3)stream.ReceiveNext();
-			//_curQuat = (Quaternion)stream.ReceiveNext();
-    //    }
-    //}
 }

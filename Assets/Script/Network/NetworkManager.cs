@@ -6,6 +6,7 @@ public class NetworkManager : Photon.PunBehaviour
 {
 	public static GameObject Tank;
 	public static GameObject HP;
+	public static UI PlayerName;
 
 	// Use this for initialization
 	private void Awake()
@@ -14,10 +15,6 @@ public class NetworkManager : Photon.PunBehaviour
         Screen.SetResolution(1280, 720, false);
 	}
 
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		
@@ -30,6 +27,8 @@ public class NetworkManager : Photon.PunBehaviour
         //roomOptions.customRoomProperties = new Hashtable() { { "map", 1 } };
         //roomOptions.maxPlayers = 20;
 		PhotonNetwork.JoinOrCreateRoom("WorldTank", null, null);
+
+		PhotonNetwork.playerName = "Client"+PhotonNetwork.countOfPlayers;
 	}
 
 	public override void OnJoinedRoom()
@@ -39,12 +38,17 @@ public class NetworkManager : Photon.PunBehaviour
 		// player의 탱크를 instantiate한다.
 		Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
 	    HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
+		PlayerName = UIManager.OpenUIPhoton<PlayerName>("Prefabs/PlayerName");
+		PlayerName.name = "PlayerClientName";
+		PlayerName.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.playerName;
 	    Tank.name = "PlayerClientTank";
 	    HP.name = "PlayerClientHP";
         Debug.Log(Tank);
 	    Debug.Log(HP);
+		Debug.Log(PlayerName);
     }
     
+
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
 	{
 		Debug.Log(codeAndMsg);

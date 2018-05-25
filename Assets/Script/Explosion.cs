@@ -4,6 +4,7 @@ public class Explosion : MonoBehaviour
 {
     public void DestroySelf()
     {
-        Destroy(gameObject);
+		if (PhotonNetwork.isMasterClient)  
+		    PhotonNetwork.Destroy(gameObject);
     }
 }

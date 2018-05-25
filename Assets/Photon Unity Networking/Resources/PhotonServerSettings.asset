@@ -44,4 +44,7 @@ MonoBehaviour:
   - TaggedPlayer
   - SetOwner
   - DamageHP
+  - SetPlayerName
+  - Setup
+  - FireBullet
   DisableAutoOpenWizard: 1
