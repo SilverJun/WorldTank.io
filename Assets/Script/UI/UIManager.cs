@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
         {
             if (!instance)
             {
-                instance = (UIManager)GameObject.FindObjectOfType(typeof(UIManager));
+                instance = (UIManager)FindObjectOfType(typeof(UIManager));
                 if (!instance)
                 {
                     GameObject uiManagerPrefab = Resources.Load<GameObject>("Prefab/Canvas-UIManager");
@@ -55,6 +55,10 @@ public class UIManager : MonoBehaviour
     private List<UI> uiList = new List<UI>();
     private List<UI> uiModalList = new List<UI>();
 
+	[SerializeField] private GameObject nameCanvas;
+	[SerializeField] private GameObject uiCanvas;
+
+
     public static T OpenUI<T>(string filepath, UIType type = UIType.Normal) where T : UI
     {
         GameObject uiPrefab = Resources.Load<GameObject>(filepath);
@@ -63,7 +67,9 @@ public class UIManager : MonoBehaviour
 
     public static T OpenUI<T>(GameObject uiPrefab, UIType type = UIType.Normal) where T : UI
     {
-        GameObject uiObject = Instantiate(uiPrefab, Instance.transform);
+        GameObject uiObject = Instantiate(uiPrefab);
+		uiObject.transform.SetParent(Instance.uiCanvas.transform, false);
+
         T ui = uiObject.GetComponent<T>();
         if (ui == null)
             ui = uiObject.AddComponent<T>();
@@ -96,6 +102,11 @@ public class UIManager : MonoBehaviour
         }
 
         return ui;
+	}
+
+	public static void AddChildNameCanvas(GameObject gameObject)
+	{
+		gameObject.transform.SetParent(instance.nameCanvas.transform, false);
 	}
 
     public static void CloseUI(UI ui)

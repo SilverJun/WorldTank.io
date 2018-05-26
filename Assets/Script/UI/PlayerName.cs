@@ -11,7 +11,7 @@ public class PlayerName : UI {
 
 	// Use this for initialization
 	void Start () {
-		transform.SetParent(UIManager.Instance.transform, false);
+		UIManager.AddChildNameCanvas(gameObject);
 		_photonView = GetComponent<PhotonView>();
 		_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         _rectTransform = GetComponent<RectTransform>();

@@ -15,11 +15,6 @@ public class NetworkManager : Photon.PunBehaviour
         Screen.SetResolution(1280, 720, false);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	public override void OnJoinedLobby()
 	{
 		//RoomOptions roomOptions = new RoomOptions();
@@ -33,21 +28,8 @@ public class NetworkManager : Photon.PunBehaviour
 
 	public override void OnJoinedRoom()
 	{
-		Debug.Log("successed to join world!");
-
-		// player의 탱크를 instantiate한다.
-		Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
-	    HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
-		PlayerName = UIManager.OpenUIPhoton<PlayerName>("Prefabs/PlayerName");
-		PlayerName.name = "PlayerClientName";
-		PlayerName.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.playerName;
-	    Tank.name = "PlayerClientTank";
-	    HP.name = "PlayerClientHP";
-        Debug.Log(Tank);
-	    Debug.Log(HP);
-		Debug.Log(PlayerName);
+		UIManager.OpenUI<LoginUI>("Prefabs/LoginUI");
     }
-    
 
 	public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
 	{
@@ -58,4 +40,17 @@ public class NetworkManager : Photon.PunBehaviour
     {
         PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
     }
+
+    public static void StartPlayer()
+	{
+		// player의 탱크를 instantiate한다.
+        Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
+        HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
+        PlayerName = UIManager.OpenUIPhoton<PlayerName>("Prefabs/PlayerName");
+        PlayerName.name = "PlayerClientName";
+        PlayerName.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.playerName;
+        Tank.name = "PlayerClientTank";
+        HP.name = "PlayerClientHP";
+	}
+
 }
