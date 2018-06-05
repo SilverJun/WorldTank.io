@@ -22,8 +22,6 @@ public class NetworkManager : Photon.PunBehaviour
         //roomOptions.customRoomProperties = new Hashtable() { { "map", 1 } };
         //roomOptions.maxPlayers = 20;
 		PhotonNetwork.JoinOrCreateRoom("WorldTank", null, null);
-
-		PhotonNetwork.playerName = "Client"+PhotonNetwork.countOfPlayers;
 	}
 
 	public override void OnJoinedRoom()
@@ -43,12 +41,13 @@ public class NetworkManager : Photon.PunBehaviour
 
     public static void StartPlayer()
 	{
+		var pos = Map.GetRandomSpawnPosition().position;
+
 		// player의 탱크를 instantiate한다.
-        Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", Vector3.zero, Quaternion.identity, 0);
-        HP = PhotonNetwork.Instantiate("Prefabs/HP", Vector3.zero, Quaternion.identity, 0);
+        Tank = PhotonNetwork.Instantiate("Prefabs/PlayerTank", pos, Quaternion.identity, 0);
+        HP = PhotonNetwork.Instantiate("Prefabs/HP", pos, Quaternion.identity, 0);
         PlayerName = UIManager.OpenUIPhoton<PlayerName>("Prefabs/PlayerName");
         PlayerName.name = "PlayerClientName";
-        PlayerName.GetComponent<UnityEngine.UI.Text>().text = PhotonNetwork.playerName;
         Tank.name = "PlayerClientTank";
         HP.name = "PlayerClientHP";
 	}

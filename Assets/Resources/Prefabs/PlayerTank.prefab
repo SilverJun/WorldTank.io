@@ -164,14 +164,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
-  _hpObject: {fileID: 0}
   _barrel: {fileID: 1067699049498818}
   _body: {fileID: 1252147172499180}
+  _barrelRotateSpeed: 2.5
+  _bodyRotateSpeed: 2.5
+  _tankSpeed: 7
+  _shootDelay: 2
   _hp: 100
-  _barrelRotateSpeed: 1
-  _bodyRotateSpeed: 2
-  _tankSpeed: 6
-  _shootDelay: 1
+  _maxHP: 100
 --- !u!114 &114323232364828590
 MonoBehaviour:
   m_ObjectHideFlags: 1

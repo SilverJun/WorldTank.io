@@ -16,7 +16,7 @@ public class Tank : Photon.MonoBehaviour
 	private PhotonView _photonView;
 
     // data
-    [SerializeField] private float _barrelRotateSpeed = 1.0f;
+    [SerializeField] private float _barrelRotateSpeed = 10.0f;
     [SerializeField] private float _bodyRotateSpeed = 1.0f;
     [SerializeField] private float _tankSpeed = 5.0f;
     [SerializeField] private float _shootDelay = 1.0f;
@@ -59,9 +59,10 @@ public class Tank : Photon.MonoBehaviour
 	    if (_isDie)
 	        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
 
-	    if (_hp <= 0)
+		if (!_isDie && _hp <= 0)
 	    {
-	        _isDie = true;
+			_isDie = true;
+            UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
 	        return;
 	    }
 
@@ -85,7 +86,9 @@ public class Tank : Photon.MonoBehaviour
     {
         _worldBarrelPos = Camera.main.WorldToScreenPoint(_barrel.transform.position);
         var dir = Input.mousePosition - _worldBarrelPos;
-        _barrel.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f));
+
+		_barrel.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation, Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f), Time.deltaTime * _barrelRotateSpeed);
+        //_barrel.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f));
     }
 
     void MoveTank()
