@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class UI : MonoBehaviour
+public abstract class UI : Photon.PunBehaviour
 {
     public Dictionary<string, GameObject> Vars { get; set; }
 

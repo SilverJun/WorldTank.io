@@ -2103,6 +2103,10 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1982920046448644, guid: 1a625a1c019244f6fab79d4102623d4b, type: 2}
+      propertyPath: m_Name
+      value: DashBoardUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982920046448644, guid: 1a625a1c019244f6fab79d4102623d4b, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -6254,6 +6258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1031030397}
   - component: {fileID: 1031030396}
+  - component: {fileID: 1031030398}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -6285,6 +6290,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1031030398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1031030395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 7
+  instantiationId: 7
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &1031774080
 GameObject:
   m_ObjectHideFlags: 0

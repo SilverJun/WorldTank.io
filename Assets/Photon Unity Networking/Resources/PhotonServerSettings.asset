@@ -47,4 +47,5 @@ MonoBehaviour:
   - SetPlayerName
   - Setup
   - FireBullet
+  - UpdateScore
   DisableAutoOpenWizard: 1

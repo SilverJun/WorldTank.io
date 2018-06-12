@@ -139,6 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224891072200049296}
   - component: {fileID: 223609867404258800}
+  - component: {fileID: 114480217549872232}
   m_Layer: 5
   m_Name: DashboardUI
   m_TagString: Untagged
@@ -178,7 +179,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!114 &114198563790699432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,7 +212,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!114 &114272074006941914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,7 +278,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 1
 --- !u!114 &114452744840744898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,7 +311,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!114 &114459050039422872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -350,7 +351,22 @@ MonoBehaviour:
     3st -
 
 
-    Total User : '
+    Total Player : '
+--- !u!114 &114480217549872232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982920046448644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c6dcd0ae949420e840404ef0e34c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _first: {fileID: 114198563790699432}
+  _second: {fileID: 114452744840744898}
+  _third: {fileID: 114146508514003686}
+  _total: {fileID: 114301781588833620}
 --- !u!114 &114657195146402324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -588,6 +604,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 189.1, y: -57.282288}
+  m_AnchoredPosition: {x: 208.73203, y: -61.28238}
   m_SizeDelta: {x: 136.6, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}

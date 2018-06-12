@@ -22,6 +22,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private float _shootDelay = 1.0f;
     [SerializeField] private int _hp;
     [SerializeField] private int _maxHP = 100;
+	[SerializeField] private float _missRatio = 10.0f;
     private bool _isShoot;
     private bool _isDie;
 
@@ -62,7 +63,7 @@ public class Tank : Photon.MonoBehaviour
 		if (!_isDie && _hp <= 0)
 	    {
 			_isDie = true;
-            UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
+			UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
 	        return;
 	    }
 
@@ -79,6 +80,10 @@ public class Tank : Photon.MonoBehaviour
 	        _isShoot = true;
 	        StartCoroutine(_reloadBullet()); // 재장전
 	    }
+
+		///test
+		if (Input.GetKeyDown(KeyCode.Space))
+			NetworkManager.Kill++;
 
 	}
 
@@ -119,17 +124,28 @@ public class Tank : Photon.MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
     {
-		if (other.gameObject.CompareTag("Bullet"))
-        {
-            Debug.Log("Tank Trigger Entered!");
-            if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
-				return;
+		if (!other.gameObject.CompareTag("Bullet"))
+			return;
+		if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+            return;
+		if (Random.Range(0, 100) < _missRatio)   /// 도탄될 확률을 구해서 피해를 입지 않도록 한다.
+		{
+			Debug.Log("도탄되었습니다!");
+			return;
+		}
 
-            Debug.Log("Hit by other bullet!");
-            var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
-            _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
-            Debug.Log(_hp);
-        }
+        Debug.Log("Hit by other bullet!");
+        var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
+		_photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
+
+        /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
+		if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+		{
+			/// KillUP!
+			NetworkManager.Kill++;
+		}
+
+        Debug.Log(_hp);
     }
 
     [PunRPC]

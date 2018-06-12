@@ -1,11 +1,11 @@
 # WorldTank.io
 첫번째 갑게만(갑자기 게임 만들기) 프로젝트
 
+## PlayNow!!
+[**Join WorldTank.io**](http://silverjun.xyz:3000/)
+
 ## Motivation
 Kenney 스프라이트 사이트에서 tank 스프라이트 시트를 보고 갑자기 만들기 시작함
-
-## PlayNow!!
-[Join WorldTank.io](http://silverjun.xyz:3000/)
 
 ## Features
 * io게임 처럼 간단
@@ -21,3 +21,4 @@ Kenney 스프라이트 사이트에서 tank 스프라이트 시트를 보고 갑
 * 플레이어 닉네임 기능 구현 - 2018/05/25 오후 11:13
 * 로그인 UI 구현 - 2018/05/27 오전 1:29
 * 리스폰, 특정위치 랜덤 스폰, 맵 개선 - 2018/06/05 오후 5:02
+* 대시보드구현 및 1학기 종강!! - 2018/06/12 오후 10:22
