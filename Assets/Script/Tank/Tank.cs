@@ -8,6 +8,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _barrel;
     [SerializeField] private GameObject _body;
+    [SerializeField] private GameObject _fireEffect;
 
     private Rigidbody2D _rigid;
 
@@ -46,6 +47,7 @@ public class Tank : Photon.MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
 		_barrel = transform.Find("Barrel").gameObject;
         _body = transform.Find("Body").gameObject;
+        _fireEffect.SetActive(false);
     }
 
     void FixedUpdate ()
@@ -76,9 +78,12 @@ public class Tank : Photon.MonoBehaviour
 	    if (!_isShoot && Input.GetMouseButtonDown(0))
 	    {
             // 총알이랑 바렐이랑 보고있는 방향이 달라서 차이값만큼 보정
-	        PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
+	        _fireEffect.SetActive(true);
+
+            PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
 	        _isShoot = true;
-	        StartCoroutine(_reloadBullet()); // 재장전
+	        StartCoroutine(_fireEffectDisable());
+            StartCoroutine(_reloadBullet()); // 재장전
 	    }
 
 		///test
@@ -120,6 +125,12 @@ public class Tank : Photon.MonoBehaviour
     {
         yield return new WaitForSeconds(_shootDelay);
         _isShoot = false;
+    }
+
+    IEnumerator _fireEffectDisable()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _fireEffect.SetActive(false);
     }
 
 	void OnTriggerEnter2D(Collider2D other)
