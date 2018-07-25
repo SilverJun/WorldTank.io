@@ -12,10 +12,10 @@ public class DashBoardUI : UI {
 	[SerializeField] private Text _third;
     [SerializeField] private Text _total;
 
-	public override void OnJoinedRoom()
+	void Start()
 	{
 		_total.text = PhotonNetwork.room.PlayerCount.ToString();
-	}
+    }
 
 	public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
 	{
@@ -34,6 +34,4 @@ public class DashBoardUI : UI {
 		_second.text = prop["Second"] + " " + prop["SecondKill"] + "Kill";
 		_third.text = prop["Third"] + " " + prop["ThirdKill"] + "Kill";
 	}
-
-
 }

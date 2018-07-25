@@ -81,6 +81,8 @@ public class NetworkManager : Photon.PunBehaviour
         PlayerName.name = "PlayerClientName";
         Tank.name = "PlayerClientTank";
 		HP.name = "PlayerClientHP";
+
+		_photonView.RPC("UpdateScore", PhotonTargets.All);
 	}
 
 
@@ -99,5 +101,12 @@ public class NetworkManager : Photon.PunBehaviour
 		dashboardTable["ThirdKill"] = users.Count > 2 ? users[2].GetScore() : 0;
 
 		PhotonNetwork.room.SetCustomProperties(dashboardTable);      
+	}
+
+	public override void OnPhotonMaxCccuReached()
+	{
+		PhotonNetwork.LeaveRoom();
+		PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
 	}
 }
