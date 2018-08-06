@@ -91,7 +91,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 10
+    InterpolateLerpSpeed: 7
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564d043a3fbed4c2899acc1383cd1502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tank: {fileID: 0}
 --- !u!114 &114964226724869174
 MonoBehaviour:
   m_ObjectHideFlags: 1

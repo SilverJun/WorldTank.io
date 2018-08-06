@@ -51,6 +51,11 @@ public class Tank : Photon.MonoBehaviour
         _fireEffect.SetActive(false);
     }
 
+    void OnDestroy()
+    {
+        PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
+    }
+
     void FixedUpdate ()
 	{
 		if (!_photonView.isMine)

@@ -791,7 +791,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 10
     InterpolateMoveTowardsAcceleration: 2
@@ -826,7 +826,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 0
+    ExtrapolateOption: 1
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
@@ -6129,11 +6129,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4561907530895636, guid: c93149ab9e50abe4c952b87dfac75621, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.69
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4561907530895636, guid: c93149ab9e50abe4c952b87dfac75621, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.751
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4561907530895636, guid: c93149ab9e50abe4c952b87dfac75621, type: 2}
       propertyPath: m_LocalPosition.z
@@ -6159,22 +6159,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 5

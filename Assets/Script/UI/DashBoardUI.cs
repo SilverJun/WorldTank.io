@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ExitGames.Client.Photon;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class DashBoardUI : UI {
 

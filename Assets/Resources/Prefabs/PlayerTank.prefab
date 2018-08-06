@@ -103,8 +103,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762137556384996}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.69, y: 0.751, z: 0}
-  m_LocalScale: {x: 2.1000001, y: 2.1000001, z: 2.1000001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4814783307472212}
   - {fileID: 4382505278952694}
@@ -250,7 +250,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -280,12 +280,12 @@ MonoBehaviour:
   _fireEffect: {fileID: 1065559568897130}
   _audio: {fileID: 82449985547593812}
   _barrelRotateSpeed: 2.5
-  _bodyRotateSpeed: 30
-  _tankSpeed: 20
-  _shootDelay: 0
+  _bodyRotateSpeed: 2
+  _tankSpeed: 7
+  _shootDelay: 1
   _hp: 100
   _maxHP: 100
-  _missRatio: 10
+  _missRatio: 20
 --- !u!114 &114323232364828590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,7 +330,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 10
+    InterpolateLerpSpeed: 7
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
