@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 114323232364828590}
   - component: {fileID: 114630108082502482}
   - component: {fileID: 114499017955827846}
+  - component: {fileID: 82449985547593812}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Tank
@@ -102,8 +103,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762137556384996}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.69, y: 0.751, z: 0}
+  m_LocalScale: {x: 2.1000001, y: 2.1000001, z: 2.1000001}
   m_Children:
   - {fileID: 4814783307472212}
   - {fileID: 4382505278952694}
@@ -182,6 +183,86 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.84, y: 0.8}
   m_EdgeRadius: 0
+--- !u!82 &82449985547593812
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1762137556384996}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5b6cfe31f0e3f4da6b0bc4f7f032dee2, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114037281492890840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,10 +278,11 @@ MonoBehaviour:
   _barrel: {fileID: 1067699049498818}
   _body: {fileID: 1252147172499180}
   _fireEffect: {fileID: 1065559568897130}
+  _audio: {fileID: 82449985547593812}
   _barrelRotateSpeed: 2.5
-  _bodyRotateSpeed: 2.5
-  _tankSpeed: 7
-  _shootDelay: 2
+  _bodyRotateSpeed: 30
+  _tankSpeed: 20
+  _shootDelay: 0
   _hp: 100
   _maxHP: 100
   _missRatio: 10

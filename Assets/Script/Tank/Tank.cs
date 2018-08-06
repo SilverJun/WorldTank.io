@@ -9,6 +9,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _barrel;
     [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _fireEffect;
+	[SerializeField] private AudioSource _audio;
 
     private Rigidbody2D _rigid;
 
@@ -79,17 +80,13 @@ public class Tank : Photon.MonoBehaviour
 	    {
             // 총알이랑 바렐이랑 보고있는 방향이 달라서 차이값만큼 보정
 	        _fireEffect.SetActive(true);
+			_audio.Play();
 
             PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
 	        _isShoot = true;
 	        StartCoroutine(_fireEffectDisable());
             StartCoroutine(_reloadBullet()); // 재장전
-	    }
-
-		///test
-		if (Input.GetKeyDown(KeyCode.Space))
-			NetworkManager.Kill++;
-
+	    }      
 	}
 
     void LookBarrelMouse()
