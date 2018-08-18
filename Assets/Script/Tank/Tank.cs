@@ -135,17 +135,31 @@ public class Tank : Photon.MonoBehaviour
         _fireEffect.SetActive(false);
     }
 
-	void OnTriggerEnter2D(Collider2D other)
+    bool CheckRicochet(Collider2D bullet)
     {
-		if (!other.gameObject.CompareTag("Bullet"))
+        /// TODO : 도탄시스템 새로 구축.
+        return true;
+    }
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("HPItem"))
+        {
+            _hp += (int)other.gameObject.GetComponent<HPItem>().HPIncrease;
+            Debug.Log(_hp);
+            if (_hp > 100)
+                _hp = 100;
+
+            return;
+        }
+        
+        if (!other.CompareTag("Bullet"))
 			return;
 		if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
             return;
-		if (Random.Range(0, 100) < _missRatio)   /// 도탄될 확률을 구해서 피해를 입지 않도록 한다.
-		{
-			Debug.Log("도탄되었습니다!");
-			return;
-		}
+        if (CheckRicochet(other))
+            return;
 
         Debug.Log("Hit by other bullet!");
         var damage = other.gameObject.GetComponent<Bullet>().GetDamage();

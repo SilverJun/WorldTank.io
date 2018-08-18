@@ -8,6 +8,7 @@ TagManager:
   - Tank
   - Wall
   - FieldObject
+  - HPItem
   layers:
   - Default
   - TransparentFX

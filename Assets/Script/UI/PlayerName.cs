@@ -6,15 +6,13 @@ using UnityEngine.UI;
 public class PlayerName : UI {
 	private Tank _tank;
     private PhotonView _photonView;
-	private Camera _mainCamera;
 	private RectTransform _rectTransform;
 
 	// Use this for initialization
 	void Start () {
 		UIManager.AddChildNameCanvas(gameObject);
 		_photonView = GetComponent<PhotonView>();
-		_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-        _rectTransform = GetComponent<RectTransform>();
+		_rectTransform = GetComponent<RectTransform>();
 		_rectTransform.position = Vector3.zero;
         GetComponent<Text>().text = _photonView.owner.NickName;
 

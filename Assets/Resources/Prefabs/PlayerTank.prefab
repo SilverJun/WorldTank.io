@@ -280,7 +280,7 @@ MonoBehaviour:
   _fireEffect: {fileID: 1065559568897130}
   _audio: {fileID: 82449985547593812}
   _barrelRotateSpeed: 2.5
-  _bodyRotateSpeed: 2
+  _bodyRotateSpeed: 1.5
   _tankSpeed: 7
   _shootDelay: 1
   _hp: 100
