@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 using DG.Tweening;
 
@@ -30,7 +29,10 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private float _shootDelay = 1.0f;
     [SerializeField] private int _hp;
     [SerializeField] private int _maxHP = 100;
-	[SerializeField] private float _missRatio = 10.0f;
+	[SerializeField] private float _missRatio = 20.0f;
+    [SerializeField] private float _minimumAngle = 30.0f;
+    [SerializeField] private float _maximumAngle = 70.0f;
+
     private bool _isShoot;
     private bool _isDie;
 
@@ -143,32 +145,56 @@ public class Tank : Photon.MonoBehaviour
 
     bool CheckRicochet(Collision2D bullet)
     {
-        /// TODO : 도탄시스템 새로 구축.
-        /// 
+        /// 도탄시스템
         /// 1. 탄환과 몸체의 각이 30도 이상될때 무조건 도탄된다.
         /// 2. 탄환과 몸체의 각이 수직 ~ 70도 무조건 타격.
         /// 3. 탄환과 몸체의 각 30~70도는 랜덤확률로 도탄.
+        /// 
+        /// 알고리즘
+        /// 1. 어떤 콜라이더에 충돌했는지 확인.
+        /// 2. 탄의 진행방향에 따른 탱크의 입사각을 구한다.
+        /// 3. 입사각에 따라 알맞은 확률을 적용한다.
 
         var bulletFront = bullet.gameObject.transform.right;
-        var tankUp = gameObject.transform.up;
+        var tankUp = -gameObject.transform.up;
         var tankRight = gameObject.transform.right;
+        var theta = 0.0f;
 
         if (bullet.otherCollider == _up)
         {
-            Debug.Log("Up!");
+            //Debug.Log("Up!");
+            /// 탄이 탱크 위에 맞을 경우, 충돌판정 기준
+            /// red = 오른쪽, green = 아래.
+            /// 따라서 수평인 탱크의 right와 탄의 right의 내적을 이용해 탄의 입사각을 구한다.
+            theta = Mathf.Acos(Vector3.Dot(tankRight, bulletFront) / (tankRight.magnitude * bulletFront.magnitude));
         }
         else if (bullet.otherCollider == _down)
         {
-            Debug.Log("Down!");
+            //Debug.Log("Down!");
+            theta = Mathf.Acos(Vector3.Dot(-tankRight, bulletFront) / (-tankRight.magnitude * bulletFront.magnitude));
         }
         else if (bullet.otherCollider == _left)
         {
-            Debug.Log("Left!");
+            //Debug.Log("Left!");
+            theta = Mathf.Acos(Vector3.Dot(tankUp, bulletFront) / (tankUp.magnitude * bulletFront.magnitude));
         }
         else if (bullet.otherCollider == _right)
         {
-            Debug.Log("Right!");
+            //Debug.Log("Right!");
+            theta = Mathf.Acos(Vector3.Dot(-tankUp, bulletFront) / (-tankUp.magnitude * bulletFront.magnitude));
         }
+
+        theta = Mathf.Rad2Deg * theta;
+        theta = Mathf.Min(theta, Mathf.PI - theta);
+
+        /// 현재각이 최대 각보다 클 경우 무조건 적중
+        if (theta > _maximumAngle)
+            return false;
+        /// 현재각이 최소 각보다 작을 경우 무조건 도탄
+        if (theta <= _minimumAngle)
+            return true;
+        if (Random.Range(0.0f, 100.0f) <= _missRatio)   /// 랜덤확률로 도탄.
+            return true;
 
         return false;
     }
@@ -195,6 +221,9 @@ public class Tank : Photon.MonoBehaviour
         Debug.Log("Hit by other bullet!");
         var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
         _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
+
+        /// 탄 중복충돌 방지.
+        other.gameObject.GetComponent<Bullet>().DisableBullet();
 
         /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
         if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())

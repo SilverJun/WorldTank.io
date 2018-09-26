@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762137556384996}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.94, y: 0.49, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4814783307472212}
@@ -351,10 +351,10 @@ MonoBehaviour:
   _body: {fileID: 1252147172499180}
   _fireEffect: {fileID: 1065559568897130}
   _audio: {fileID: 82449985547593812}
-  _up: {fileID: 68424337690983228}
-  _left: {fileID: 68112777353007308}
-  _right: {fileID: 68639948688105344}
-  _down: {fileID: 68115920609699576}
+  _up: {fileID: 68115920609699576}
+  _left: {fileID: 68639948688105344}
+  _right: {fileID: 68112777353007308}
+  _down: {fileID: 68424337690983228}
   _barrelRotateSpeed: 2.5
   _bodyRotateSpeed: 1.5
   _tankSpeed: 7
@@ -362,6 +362,8 @@ MonoBehaviour:
   _hp: 100
   _maxHP: 100
   _missRatio: 20
+  _minimumAngle: 30
+  _maximumAngle: 70
 --- !u!114 &114323232364828590
 MonoBehaviour:
   m_ObjectHideFlags: 1

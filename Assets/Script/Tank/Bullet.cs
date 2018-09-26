@@ -3,7 +3,7 @@
 public class Bullet : Photon.PunBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10.0f;
-    [SerializeField] private int _damage = 40;
+    [SerializeField] private int _damage = 10;
     private int _viewID;
     private Rigidbody2D _rigid;
     private PhotonView _photonView;
@@ -31,12 +31,15 @@ public class Bullet : Photon.PunBehaviour
 
     public int GetDamage() { return _damage; }
 
+    public void DisableBullet()
+    {
+        enabled = false;
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!_photonView.isMine)
             return;
-
-        Debug.Log("NotSelfFire");
 
         PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
         PhotonNetwork.Destroy(gameObject);

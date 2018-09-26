@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Photon;
+using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class Explosion : PunBehaviour
 {
     public void DestroySelf()
     {
-		if (PhotonNetwork.isMasterClient)  
-		    PhotonNetwork.Destroy(gameObject);
+        if (PhotonNetwork.isMasterClient || photonView.isMine)
+            PhotonNetwork.Destroy(gameObject);
     }
 }
