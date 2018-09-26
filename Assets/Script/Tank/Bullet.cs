@@ -16,7 +16,6 @@ public class Bullet : Photon.PunBehaviour
 
         if (_photonView.isMine)
         {
-            GetComponent<CapsuleCollider2D>().enabled = true;
             _viewID = NetworkManager.Tank.GetComponent<PhotonView>().viewID;
             _photonView.RPC("SetOwner", PhotonTargets.All, _viewID);
         }
@@ -32,28 +31,14 @@ public class Bullet : Photon.PunBehaviour
 
     public int GetDamage() { return _damage; }
 
-	void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (!_photonView.isMine)
             return;
 
-        if (other.gameObject.CompareTag("FieldObject"))
-		{
-			PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
-		    PhotonNetwork.Destroy(gameObject);
-		}
-		else if (other.gameObject.CompareTag("Tank"))
-		{
-		    if (_viewID == other.GetComponent<PhotonView>().viewID)
-		        return;
-            Debug.Log("Tank Hit!");
-		    PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
-            PhotonNetwork.Destroy(gameObject);
-		}
-		else if (other.gameObject.CompareTag("Wall"))
-		{
-			PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
-		    PhotonNetwork.Destroy(gameObject);
-		}
-	}
+        Debug.Log("NotSelfFire");
+
+        PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
+        PhotonNetwork.Destroy(gameObject);
+    }
 }

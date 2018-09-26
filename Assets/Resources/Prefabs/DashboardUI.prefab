@@ -245,7 +245,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DashBoard
+  m_Text: ScoreBoard
 --- !u!114 &114301781588833620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -348,7 +348,7 @@ MonoBehaviour:
 
     2nd -
 
-    3st -
+    3rd -
 
 
     Total Player : '
@@ -489,7 +489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 167, y: 7.8}
+  m_AnchoredPosition: {x: 167, y: 7.800003}
   m_SizeDelta: {x: 194.52, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224276565959288308
@@ -507,7 +507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 160.16995, y: 29.2}
+  m_AnchoredPosition: {x: 160.16995, y: 29.200005}
   m_SizeDelta: {x: 194.52, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224511372906581504
@@ -604,6 +604,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 208.73203, y: -61.28238}
+  m_AnchoredPosition: {x: 208.73203, y: -61.28237}
   m_SizeDelta: {x: 136.6, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}

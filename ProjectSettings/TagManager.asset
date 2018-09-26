@@ -5,10 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
-  - Tank
   - Wall
   - FieldObject
   - HPItem
+  - PlayerTank
+  - EnemyTank
+  - Tank
   layers:
   - Default
   - TransparentFX
@@ -18,9 +20,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Bullet
   - 
   - 
   - 

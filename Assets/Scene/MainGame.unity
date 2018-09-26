@@ -2418,10 +2418,6 @@ Prefab:
       propertyPath: m_Name
       value: DashBoardUI
       objectReference: {fileID: 0}
-    - target: {fileID: 1982920046448644, guid: 1a625a1c019244f6fab79d4102623d4b, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a625a1c019244f6fab79d4102623d4b, type: 2}
   m_IsPrefabParent: 0
@@ -6273,22 +6269,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: viewIdField
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114783188444370330, guid: c93149ab9e50abe4c952b87dfac75621,
+    - target: {fileID: 114323232364828590, guid: c93149ab9e50abe4c952b87dfac75621,
         type: 2}
       propertyPath: instantiationId
       value: 5
@@ -17994,6 +17990,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1057036134357818, guid: 79ebac9b0071c1c4ca2706c86c1573fd, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50397502909120252, guid: 79ebac9b0071c1c4ca2706c86c1573fd,
+        type: 2}
+      propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

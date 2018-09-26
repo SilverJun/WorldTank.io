@@ -80,7 +80,9 @@ public class NetworkManager : Photon.PunBehaviour
         PlayerName = UIManager.OpenUIPhoton<PlayerName>("Prefabs/PlayerName");
         PlayerName.name = "PlayerClientName";
         Tank.name = "PlayerClientTank";
-		HP.name = "PlayerClientHP";
+	    Tank.tag = "PlayerTank";
+	    Tank.layer = 8;
+        HP.name = "PlayerClientHP";
 
 		_photonView.RPC("UpdateScore", PhotonTargets.All);
 	}

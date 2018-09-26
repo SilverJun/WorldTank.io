@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using DG.Tweening;
 
@@ -10,6 +11,11 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _fireEffect;
 	[SerializeField] private AudioSource _audio;
+
+    [SerializeField] private EdgeCollider2D _up;
+    [SerializeField] private EdgeCollider2D _left;
+    [SerializeField] private EdgeCollider2D _right;
+    [SerializeField] private EdgeCollider2D _down;
 
     private Rigidbody2D _rigid;
 
@@ -135,16 +141,41 @@ public class Tank : Photon.MonoBehaviour
         _fireEffect.SetActive(false);
     }
 
-    bool CheckRicochet(Collider2D bullet)
+    bool CheckRicochet(Collision2D bullet)
     {
         /// TODO : 도탄시스템 새로 구축.
-        return true;
+        /// 
+        /// 1. 탄환과 몸체의 각이 30도 이상될때 무조건 도탄된다.
+        /// 2. 탄환과 몸체의 각이 수직 ~ 70도 무조건 타격.
+        /// 3. 탄환과 몸체의 각 30~70도는 랜덤확률로 도탄.
+
+        var bulletFront = bullet.gameObject.transform.right;
+        var tankUp = gameObject.transform.up;
+        var tankRight = gameObject.transform.right;
+
+        if (bullet.otherCollider == _up)
+        {
+            Debug.Log("Up!");
+        }
+        else if (bullet.otherCollider == _down)
+        {
+            Debug.Log("Down!");
+        }
+        else if (bullet.otherCollider == _left)
+        {
+            Debug.Log("Left!");
+        }
+        else if (bullet.otherCollider == _right)
+        {
+            Debug.Log("Right!");
+        }
+
+        return false;
     }
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.CompareTag("HPItem"))
+        if (other.gameObject.CompareTag("HPItem"))
         {
             _hp += (int)other.gameObject.GetComponent<HPItem>().HPIncrease;
             Debug.Log(_hp);
@@ -153,27 +184,60 @@ public class Tank : Photon.MonoBehaviour
 
             return;
         }
-        
-        if (!other.CompareTag("Bullet"))
-			return;
-		if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+
+        if (!other.gameObject.CompareTag("Bullet"))
+            return;
+        if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
             return;
         if (CheckRicochet(other))
             return;
 
         Debug.Log("Hit by other bullet!");
         var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
-		_photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
+        _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
 
         /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-		if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
-		{
-			/// KillUP!
-			NetworkManager.Kill++;
-		}
+        if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+        {
+            /// KillUP!
+            NetworkManager.Kill++;
+        }
 
         Debug.Log(_hp);
     }
+
+  //  void OnTriggerEnter2D(Collider2D other)
+  //  {
+  //      if (other.CompareTag("HPItem"))
+  //      {
+  //          _hp += (int)other.gameObject.GetComponent<HPItem>().HPIncrease;
+  //          Debug.Log(_hp);
+  //          if (_hp > 100)
+  //              _hp = 100;
+
+  //          return;
+  //      }
+        
+  //      if (!other.CompareTag("Bullet"))
+		//	return;
+		//if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+  //          return;
+  //      if (CheckRicochet(other))
+  //          return;
+
+  //      Debug.Log("Hit by other bullet!");
+  //      var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
+		//_photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
+
+  //      /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
+		//if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+		//{
+		//	/// KillUP!
+		//	NetworkManager.Kill++;
+		//}
+
+  //      Debug.Log(_hp);
+  //  }
 
     [PunRPC]
     void DamageHP(int damage, int viewID)
