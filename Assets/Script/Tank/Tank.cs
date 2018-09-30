@@ -30,8 +30,8 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private int _hp;
     [SerializeField] private int _maxHP = 100;
 	[SerializeField] private float _missRatio = 20.0f;
-    [SerializeField] private float _minimumAngle = 30.0f;
-    [SerializeField] private float _maximumAngle = 70.0f;
+    [SerializeField] private float _minimumAngle = 20.0f;
+    [SerializeField] private float _maximumAngle = 80.0f;
 
     private bool _isShoot;
     private bool _isDie;
@@ -145,15 +145,12 @@ public class Tank : Photon.MonoBehaviour
 
     bool CheckRicochet(Collision2D bullet)
     {
-        /// 도탄시스템
-        /// 1. 탄환과 몸체의 각이 30도 이상될때 무조건 도탄된다.
-        /// 2. 탄환과 몸체의 각이 수직 ~ 70도 무조건 타격.
-        /// 3. 탄환과 몸체의 각 30~70도는 랜덤확률로 도탄.
+        /// 도탄시스템 알고리즘
         /// 
-        /// 알고리즘
         /// 1. 어떤 콜라이더에 충돌했는지 확인.
         /// 2. 탄의 진행방향에 따른 탱크의 입사각을 구한다.
         /// 3. 입사각에 따라 알맞은 확률을 적용한다.
+        /// 
 
         var bulletFront = bullet.gameObject.transform.right;
         var tankUp = -gameObject.transform.up;
@@ -185,7 +182,7 @@ public class Tank : Photon.MonoBehaviour
         }
 
         theta = Mathf.Rad2Deg * theta;
-        theta = Mathf.Min(theta, Mathf.PI - theta);
+        theta = Mathf.Abs(Mathf.Min(theta, Mathf.PI - theta));
 
         /// 현재각이 최대 각보다 클 경우 무조건 적중
         if (theta > _maximumAngle)
@@ -216,7 +213,12 @@ public class Tank : Photon.MonoBehaviour
         if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
             return;
         if (CheckRicochet(other))
+        {   /// 도탄 알림.
+            PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
             return;
+        }
+            
+
 
         Debug.Log("Hit by other bullet!");
         var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
