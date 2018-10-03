@@ -9,6 +9,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _barrel;
     [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _fireEffect;
+    [SerializeField] private Transform _firePos;
 	[SerializeField] private AudioSource _audio;
 
     [SerializeField] private EdgeCollider2D _up;
@@ -95,7 +96,7 @@ public class Tank : Photon.MonoBehaviour
 	        _fireEffect.SetActive(true);
 			_audio.Play();
 
-            PhotonNetwork.Instantiate("Prefabs/Bullet", transform.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
+            PhotonNetwork.Instantiate("Prefabs/Bullet", _firePos.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
 	        _isShoot = true;
 	        StartCoroutine(_fireEffectDisable());
             StartCoroutine(_reloadBullet()); // 재장전
@@ -217,8 +218,6 @@ public class Tank : Photon.MonoBehaviour
             PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
             return;
         }
-            
-
 
         Debug.Log("Hit by other bullet!");
         var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
@@ -236,39 +235,6 @@ public class Tank : Photon.MonoBehaviour
 
         Debug.Log(_hp);
     }
-
-  //  void OnTriggerEnter2D(Collider2D other)
-  //  {
-  //      if (other.CompareTag("HPItem"))
-  //      {
-  //          _hp += (int)other.gameObject.GetComponent<HPItem>().HPIncrease;
-  //          Debug.Log(_hp);
-  //          if (_hp > 100)
-  //              _hp = 100;
-
-  //          return;
-  //      }
-        
-  //      if (!other.CompareTag("Bullet"))
-		//	return;
-		//if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
-  //          return;
-  //      if (CheckRicochet(other))
-  //          return;
-
-  //      Debug.Log("Hit by other bullet!");
-  //      var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
-		//_photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
-
-  //      /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-		//if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
-		//{
-		//	/// KillUP!
-		//	NetworkManager.Kill++;
-		//}
-
-  //      Debug.Log(_hp);
-  //  }
 
     [PunRPC]
     void DamageHP(int damage, int viewID)
