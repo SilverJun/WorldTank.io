@@ -11,7 +11,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _fireEffect;
     [SerializeField] private Transform _firePos;
 	[SerializeField] private AudioSource _audio;
-
+    [SerializeField] private ParticleSystem _smoke;
     [SerializeField] private EdgeCollider2D _up;
     [SerializeField] private EdgeCollider2D _left;
     [SerializeField] private EdgeCollider2D _right;
@@ -43,11 +43,24 @@ public class Tank : Photon.MonoBehaviour
         {
             return _hp;
         }
+        set
+        {
+            _hp = value;
+            
+            if (_hp > _maxHP)
+                _hp = _maxHP;
+            else if (_hp <= 0)
+                _isDie = true;
+            else if (_hp <= 40)
+                _smoke.Play();
+            else
+                _smoke.Stop();
+        }
     }
 
     private void Awake()
     {
-        _hp = _maxHP;
+        Hp = _maxHP;
     }
 
     void Start ()
@@ -75,13 +88,9 @@ public class Tank : Photon.MonoBehaviour
 		}
 
 	    if (_isDie)
-	        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
-
-		if (!_isDie && _hp <= 0)
 	    {
-			_isDie = true;
-			UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
-	        return;
+	        UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
+            PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
 	    }
 
         _camera.transform.position = new Vector3(transform.position.x, transform.position.y, _camera.transform.position.z);
@@ -100,7 +109,7 @@ public class Tank : Photon.MonoBehaviour
 	        _isShoot = true;
 	        StartCoroutine(_fireEffectDisable());
             StartCoroutine(_reloadBullet()); // 재장전
-	    }      
+	    }
 	}
 
     void LookBarrelMouse()
@@ -199,16 +208,6 @@ public class Tank : Photon.MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("HPItem"))
-        {
-            _hp += (int)other.gameObject.GetComponent<HPItem>().HPIncrease;
-            Debug.Log(_hp);
-            if (_hp > 100)
-                _hp = 100;
-
-            return;
-        }
-
         if (!other.gameObject.CompareTag("Bullet"))
             return;
         if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
@@ -227,20 +226,20 @@ public class Tank : Photon.MonoBehaviour
         other.gameObject.GetComponent<Bullet>().DisableBullet();
 
         /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-        if (_hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+        if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
         {
             /// KillUP!
             NetworkManager.Kill++;
         }
 
-        Debug.Log(_hp);
+        Debug.Log(Hp);
     }
 
     [PunRPC]
     void DamageHP(int damage, int viewID)
     {
         if (_photonView.viewID == viewID)
-            _hp -= damage;
+            Hp -= damage;
     }
 
 }

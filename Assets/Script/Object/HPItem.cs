@@ -1,10 +1,14 @@
-﻿using Photon;
+﻿using System.Collections;
+using DG.Tweening;
+using Photon;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class HPItem : PunBehaviour
+public class HPItem : Photon.MonoBehaviour, IPunObservable
 {
     [SerializeField] private Collider2D _collider;
-    [SerializeField] private float _HPIncrease = 40.0f;
+    [SerializeField] private int _HPIncrease = 40;
+    [SerializeField] private Image _image;
 
     public float HPIncrease
     {
@@ -26,9 +30,40 @@ public class HPItem : PunBehaviour
         if (!photonView.isMine)
             return;
 
-        if (other.CompareTag("Tank"))
+        if (other.CompareTag("PlayerTank"))
         {
+            other.GetComponent<Tank>().Hp += _HPIncrease;
+
             PhotonNetwork.Destroy(gameObject);
+        }
+    }
+
+    public void GenAnim(float time)
+    {
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(_image.DOFillAmount(1.0f, time));
+        seq.AppendCallback(() =>
+        {
+            EnableItem();
+        });
+
+        seq.Play();
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            Debug.Log("stream Send");
+            stream.SendNext(_image.fillAmount);
+            stream.SendNext(_collider.enabled);
+        }
+        else
+        {
+            Debug.Log("stream Receive");
+            _image.fillAmount = (float)stream.ReceiveNext();
+            _collider.enabled = (bool)stream.ReceiveNext();
         }
     }
 }

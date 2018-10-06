@@ -4854,7 +4854,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1137815470020824, guid: 49ec04de722df4042a73dcca08416c50, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
+        type: 2}
+      propertyPath: instantiationId
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
+        type: 2}
+      propertyPath: viewIdField
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49ec04de722df4042a73dcca08416c50, type: 2}
@@ -13328,7 +13338,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1137815470020824, guid: 49ec04de722df4042a73dcca08416c50, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
+        type: 2}
+      propertyPath: viewIdField
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
+        type: 2}
+      propertyPath: instantiationId
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49ec04de722df4042a73dcca08416c50, type: 2}
@@ -17574,19 +17594,19 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 212635758338038968, guid: 49ec04de722df4042a73dcca08416c50,
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
         type: 2}
-      propertyPath: m_SortingLayerID
-      value: 901861255
+      propertyPath: instantiationId
+      value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 212635758338038968, guid: 49ec04de722df4042a73dcca08416c50,
+    - target: {fileID: 114232303845610838, guid: 49ec04de722df4042a73dcca08416c50,
         type: 2}
-      propertyPath: m_SortingLayer
-      value: 2
+      propertyPath: viewIdField
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1137815470020824, guid: 49ec04de722df4042a73dcca08416c50, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49ec04de722df4042a73dcca08416c50, type: 2}

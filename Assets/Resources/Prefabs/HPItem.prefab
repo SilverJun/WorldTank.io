@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 58865271737738802}
   _HPIncrease: 40
+  _image: {fileID: 114645462421063574}
 --- !u!114 &114923931276401828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +104,15 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114645462421063574}
+  - {fileID: 223719095920278072}
+  - {fileID: 58865271737738802}
+  - {fileID: 114881476485934210}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -199,6 +203,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.4230003, y: 1.1135608}
   m_SizeDelta: {x: 0.48, y: 0.48}
   m_Pivot: {x: 0.5, y: 0.5}
