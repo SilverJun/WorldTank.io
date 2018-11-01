@@ -169,7 +169,7 @@ public class Tank : Photon.MonoBehaviour
 
         if (bullet.otherCollider == _up)
         {
-            //Debug.Log("Up!");
+            Debug.Log("Up!");
             /// 탄이 탱크 위에 맞을 경우, 충돌판정 기준
             /// red = 오른쪽, green = 아래.
             /// 따라서 수평인 탱크의 right와 탄의 right의 내적을 이용해 탄의 입사각을 구한다.
@@ -177,22 +177,24 @@ public class Tank : Photon.MonoBehaviour
         }
         else if (bullet.otherCollider == _down)
         {
-            //Debug.Log("Down!");
+            Debug.Log("Down!");
             theta = Mathf.Acos(Vector3.Dot(-tankRight, bulletFront) / (-tankRight.magnitude * bulletFront.magnitude));
         }
         else if (bullet.otherCollider == _left)
         {
-            //Debug.Log("Left!");
+            Debug.Log("Left!");
             theta = Mathf.Acos(Vector3.Dot(tankUp, bulletFront) / (tankUp.magnitude * bulletFront.magnitude));
         }
         else if (bullet.otherCollider == _right)
         {
-            //Debug.Log("Right!");
+            Debug.Log("Right!");
             theta = Mathf.Acos(Vector3.Dot(-tankUp, bulletFront) / (-tankUp.magnitude * bulletFront.magnitude));
         }
 
         theta = Mathf.Rad2Deg * theta;
         theta = Mathf.Abs(Mathf.Min(theta, Mathf.PI - theta));
+
+		Debug.Log(theta);
 
         /// 현재각이 최대 각보다 클 경우 무조건 적중
         if (theta > _maximumAngle)
@@ -208,25 +210,36 @@ public class Tank : Photon.MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+		var bullet = other.gameObject.GetComponent<Bullet>();
+
+		Debug.Log("OnCollisionEnter2D");
         if (!other.gameObject.CompareTag("Bullet"))
             return;
-        if (_photonView.viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+		if (_photonView.viewID == bullet.GetOwner())
             return;
+		if (!bullet.enabled)
+			return;
         if (CheckRicochet(other))
-        {   /// 도탄 알림.
+        {
+            /// 탄 중복충돌 방지.
+			bullet.DisableBullet();
+			/// 도탄 알림.
+			Debug.Log("도탄되었습니다.");
             PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
             return;
-        }
+		}
 
         Debug.Log("Hit by other bullet!");
-        var damage = other.gameObject.GetComponent<Bullet>().GetDamage();
+
+		/// 탄 중복충돌 방지.
+		bullet.DisableBullet();
+
+		var damage = bullet.GetDamage();
         _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
 
-        /// 탄 중복충돌 방지.
-        other.gameObject.GetComponent<Bullet>().DisableBullet();
 
         /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-        if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == other.gameObject.GetComponent<Bullet>().GetOwner())
+		if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == bullet.GetOwner())
         {
             /// KillUP!
             NetworkManager.Kill++;
