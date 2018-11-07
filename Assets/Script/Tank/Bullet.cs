@@ -8,11 +8,21 @@ public class Bullet : Photon.PunBehaviour
     private Rigidbody2D _rigid;
     private PhotonView _photonView;
 
+    /// <summary>
+    /// 이미 탄이 한번 맞아서 체크되었는지 알고있는 변수
+    /// </summary>
+    public bool IsAlreadyChecked
+    {
+        get;
+        set;
+    }
+
     void Start ()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _rigid.velocity = transform.right.normalized * _bulletSpeed;
         _photonView = GetComponent<PhotonView>();
+        IsAlreadyChecked = false;
 
         if (_photonView.isMine)
         {
@@ -33,7 +43,7 @@ public class Bullet : Photon.PunBehaviour
 
     public void DisableBullet()
     {
-        enabled = false;
+        IsAlreadyChecked = true;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

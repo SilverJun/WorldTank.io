@@ -213,12 +213,20 @@ public class Tank : Photon.MonoBehaviour
 		var bullet = other.gameObject.GetComponent<Bullet>();
 
 		Debug.Log("OnCollisionEnter2D");
-        if (!other.gameObject.CompareTag("Bullet"))
+        if (!other.gameObject.CompareTag("Bullet")) {
+            Debug.Log("!other.gameObject.CompareTag(\"Bullet\")");
             return;
-		if (_photonView.viewID == bullet.GetOwner())
+        }
+        if (_photonView.viewID == bullet.GetOwner())
+        {
+            Debug.Log("_photonView.viewID == bullet.GetOwner()");
             return;
-		if (!bullet.enabled)
-			return;
+        }
+		if (bullet.IsAlreadyChecked)
+		{
+		    Debug.Log("bullet.IsAlreadyChecked");
+            return;
+        }
         if (CheckRicochet(other))
         {
             /// 탄 중복충돌 방지.
