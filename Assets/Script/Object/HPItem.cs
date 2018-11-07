@@ -55,13 +55,11 @@ public class HPItem : Photon.MonoBehaviour, IPunObservable
     {
         if (stream.isWriting)
         {
-            Debug.Log("stream Send");
             stream.SendNext(_image.fillAmount);
             stream.SendNext(_collider.enabled);
         }
         else
         {
-            Debug.Log("stream Receive");
             _image.fillAmount = (float)stream.ReceiveNext();
             _collider.enabled = (bool)stream.ReceiveNext();
         }
