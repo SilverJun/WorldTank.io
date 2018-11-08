@@ -32,7 +32,8 @@ public class HPItem : Photon.MonoBehaviour, IPunObservable
 
         if (other.CompareTag("PlayerTank") || other.CompareTag("EnemyTank"))
         {
-            other.GetComponent<Tank>().Hp += _HPIncrease;
+            //other.GetComponent<Tank>().Hp += _HPIncrease;
+            photonView.RPC("DamageHP", PhotonTargets.All, -_HPIncrease, other.GetComponent<Tank>().photonView.viewID);
 
             PhotonNetwork.Destroy(gameObject);
         }
