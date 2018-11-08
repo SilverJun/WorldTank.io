@@ -10,7 +10,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _fireEffect;
     [SerializeField] private Transform _firePos;
-	[SerializeField] private AudioSource _audio;
+    [SerializeField] private AudioSource _audio;
     [SerializeField] private ParticleSystem _smoke;
     [SerializeField] private EdgeCollider2D _up;
     [SerializeField] private EdgeCollider2D _left;
@@ -21,7 +21,7 @@ public class Tank : Photon.MonoBehaviour
 
     private Vector3 _worldBarrelPos;
 
-	private PhotonView _photonView;
+    private PhotonView _photonView;
 
     // data
     [SerializeField] private float _barrelRotateSpeed = 10.0f;
@@ -30,7 +30,7 @@ public class Tank : Photon.MonoBehaviour
     [SerializeField] private float _shootDelay = 1.0f;
     [SerializeField] private int _hp;
     [SerializeField] private int _maxHP = 100;
-	[SerializeField] private float _missRatio = 20.0f;
+    [SerializeField] private float _missRatio = 20.0f;
     [SerializeField] private float _minimumAngle = 20.0f;
     [SerializeField] private float _maximumAngle = 80.0f;
 
@@ -39,14 +39,11 @@ public class Tank : Photon.MonoBehaviour
 
     public int Hp
     {
-        get
-        {
-            return _hp;
-        }
+        get { return _hp; }
         set
         {
             _hp = value;
-            
+
             if (_hp > _maxHP)
                 _hp = _maxHP;
             else if (_hp <= 0)
@@ -63,12 +60,12 @@ public class Tank : Photon.MonoBehaviour
         Hp = _maxHP;
     }
 
-    void Start ()
+    void Start()
     {
         _photonView = GetComponent<PhotonView>();
         _camera = GameObject.FindWithTag("MainCamera");
         _rigid = GetComponent<Rigidbody2D>();
-		_barrel = transform.Find("Barrel").gameObject;
+        _barrel = transform.Find("Barrel").gameObject;
         _body = transform.Find("Body").gameObject;
         _fireEffect.SetActive(false);
     }
@@ -78,63 +75,70 @@ public class Tank : Photon.MonoBehaviour
         PhotonNetwork.Instantiate("Prefabs/Explosion", transform.position, Quaternion.identity, 0);
     }
 
-    void FixedUpdate ()
-	{
-		if (!_photonView.isMine)
-		{
-			//transform.position = _curPos;
-			//transform.rotation = _curQuat;
-			return;
-		}
+    void FixedUpdate()
+    {
+        if (!_photonView.isMine)
+        {
+            //transform.position = _curPos;
+            //transform.rotation = _curQuat;
+            return;
+        }
 
-	    if (_isDie)
-	    {
-	        UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
+        if (_isDie)
+        {
+            UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
             PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
-	    }
+        }
 
-        _camera.transform.position = new Vector3(transform.position.x, transform.position.y, _camera.transform.position.z);
+        _camera.transform.position =
+            new Vector3(transform.position.x, transform.position.y, _camera.transform.position.z);
 
         LookBarrelMouse();
-	    MoveTank();
+        MoveTank();
 
-	    // Left Mouse Click
-	    if (!_isShoot && Input.GetMouseButtonDown(0))
-	    {
+        // Left Mouse Click
+        if (!_isShoot && Input.GetMouseButtonDown(0))
+        {
             // 총알이랑 바렐이랑 보고있는 방향이 달라서 차이값만큼 보정
-	        _fireEffect.SetActive(true);
-			_audio.Play();
+            _fireEffect.SetActive(true);
+            _audio.Play();
 
-            PhotonNetwork.Instantiate("Prefabs/Bullet", _firePos.position, Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
-	        _isShoot = true;
-	        StartCoroutine(_fireEffectDisable());
+            PhotonNetwork.Instantiate("Prefabs/Bullet", _firePos.position,
+                Quaternion.Euler(0.0f, 0.0f, _barrel.transform.eulerAngles.z - 90.0f), 0);
+            _isShoot = true;
+            StartCoroutine(_fireEffectDisable());
             StartCoroutine(_reloadBullet()); // 재장전
-	    }
-	}
+        }
+    }
 
     void LookBarrelMouse()
     {
         _worldBarrelPos = Camera.main.WorldToScreenPoint(_barrel.transform.position);
         var dir = Input.mousePosition - _worldBarrelPos;
 
-		_barrel.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation, Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f), Time.deltaTime * _barrelRotateSpeed);
+        _barrel.transform.rotation = Quaternion.Lerp(_barrel.transform.rotation,
+            Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f),
+            Time.deltaTime * _barrelRotateSpeed);
         //_barrel.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90.0f));
     }
 
     void MoveTank()
     {
-        if (Input.GetKey(KeyCode.W))    // 전진 이동.
+        if (Input.GetKey(KeyCode.W)) // 전진 이동.
         {
             _rigid.AddForce(-transform.up * _tankSpeed);
         }
-        if (Input.GetKey(KeyCode.S))    // 후진 이동.
+
+        if (Input.GetKey(KeyCode.S)) // 후진 이동.
         {
             _rigid.AddForce(transform.up * _tankSpeed);
         }
+
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(0.0f, 0.0f, _bodyRotateSpeed);
         }
+
         if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(0.0f, 0.0f, -_bodyRotateSpeed);
@@ -192,9 +196,9 @@ public class Tank : Photon.MonoBehaviour
         }
 
         theta = Mathf.Rad2Deg * theta;
-        theta = Mathf.Abs(Mathf.Min(theta, 180.0f-theta));
+        theta = Mathf.Abs(Mathf.Min(theta, 180.0f - theta));
 
-		Debug.Log(theta);
+        Debug.Log(theta);
 
         /// 현재각이 최대 각보다 클 경우 무조건 적중
         if (theta > _maximumAngle)
@@ -202,7 +206,7 @@ public class Tank : Photon.MonoBehaviour
         /// 현재각이 최소 각보다 작을 경우 무조건 도탄
         if (theta <= _minimumAngle)
             return true;
-        if (Random.Range(0.0f, 100.0f) <= _missRatio)   /// 랜덤확률로 도탄.
+        if (Random.Range(0.0f, 100.0f) <= _missRatio) /// 랜덤확률로 도탄.
             return true;
 
         return false;
@@ -210,45 +214,47 @@ public class Tank : Photon.MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-		var bullet = other.gameObject.GetComponent<Bullet>();
+        var bullet = other.gameObject.GetComponent<Bullet>();
 
-		Debug.Log("OnCollisionEnter2D");
-        if (!_photonView.isMine)
-            return;
-        if (!other.gameObject.CompareTag("Bullet")) {
+        Debug.Log("OnCollisionEnter2D");
+        if (!other.gameObject.CompareTag("Bullet"))
+        {
             return;
         }
+
         if (_photonView.viewID == bullet.GetOwner())
         {
             Debug.Log("_photonView.viewID == bullet.GetOwner()");
             return;
         }
-		if (bullet.IsAlreadyChecked)
-		{
-		    Debug.Log("bullet.IsAlreadyChecked");
+
+        if (bullet.IsAlreadyChecked)
+        {
+            Debug.Log("bullet.IsAlreadyChecked");
             return;
         }
+
         if (CheckRicochet(other))
         {
             /// 탄 중복충돌 방지.
-			bullet.DisableBullet();
-			/// 도탄 알림.
-			Debug.Log("도탄되었습니다.");
+            bullet.DisableBullet();
+            /// 도탄 알림.
+            Debug.Log("도탄되었습니다.");
             PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
             return;
-		}
+        }
 
         Debug.Log("Hit by other bullet!");
 
-		/// 탄 중복충돌 방지.
-		bullet.DisableBullet();
+        /// 탄 중복충돌 방지.
+        bullet.DisableBullet();
 
-		var damage = bullet.GetDamage();
+        var damage = bullet.GetDamage();
         _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
 
 
         /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-		if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == bullet.GetOwner())
+        if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == bullet.GetOwner())
         {
             /// KillUP!
             NetworkManager.Kill++;
