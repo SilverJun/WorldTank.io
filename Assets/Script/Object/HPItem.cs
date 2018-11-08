@@ -30,7 +30,7 @@ public class HPItem : Photon.MonoBehaviour, IPunObservable
         if (!photonView.isMine)
             return;
 
-        if (other.CompareTag("PlayerTank"))
+        if (other.CompareTag("PlayerTank") || other.CompareTag("EnemyTank"))
         {
             other.GetComponent<Tank>().Hp += _HPIncrease;
 
