@@ -192,7 +192,7 @@ public class Tank : Photon.MonoBehaviour
         }
 
         theta = Mathf.Rad2Deg * theta;
-        theta = Mathf.Abs(Mathf.Min(theta, Mathf.PI - theta));
+        theta = Mathf.Abs(Mathf.Min(theta, 180.0f-theta));
 
 		Debug.Log(theta);
 
@@ -213,8 +213,9 @@ public class Tank : Photon.MonoBehaviour
 		var bullet = other.gameObject.GetComponent<Bullet>();
 
 		Debug.Log("OnCollisionEnter2D");
+        if (!_photonView.isMine)
+            return;
         if (!other.gameObject.CompareTag("Bullet")) {
-            Debug.Log("!other.gameObject.CompareTag(\"Bullet\")");
             return;
         }
         if (_photonView.viewID == bullet.GetOwner())
