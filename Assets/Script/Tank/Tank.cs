@@ -87,7 +87,7 @@ public class Tank : Photon.MonoBehaviour
         if (_isDie)
         {
             UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
-            PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
+            PhotonNetwork.Destroy(gameObject);
         }
 
         _camera.transform.position =
@@ -233,6 +233,9 @@ public class Tank : Photon.MonoBehaviour
             Debug.Log("bullet.IsAlreadyChecked");
             return;
         }
+
+        if (!PhotonNetwork.isMasterClient)
+            return;
 
         if (CheckRicochet(other))
         {

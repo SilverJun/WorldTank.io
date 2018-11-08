@@ -85,6 +85,8 @@ public class NetworkManager : Photon.PunBehaviour
         HP.name = "PlayerClientHP";
 
 		_photonView.RPC("UpdateScore", PhotonTargets.All);
+
+        Debug.LogFormat("IsMasterClient? {0}", PhotonNetwork.isMasterClient);
 	}
 
 
