@@ -24,9 +24,10 @@ public class ItemSpawner : PunBehaviour
         if (!PhotonNetwork.isMasterClient)
             yield break;
 
-        _hpItem = PhotonNetwork.Instantiate("Prefabs/HPItem", transform.position, Quaternion.identity, 0);
+        _hpItem = PhotonNetwork.InstantiateSceneObject("Prefabs/HPItem", transform.position, Quaternion.identity, 0, null);
 
-        _hpItem.GetComponent<HPItem>().GenAnim(30.0f);
+        //_hpItem.GetComponent<HPItem>().GenAnim(30.0f);
+        _hpItem.GetComponent<HPItem>().GenItem();
 
         yield return new WaitWhile(() => _hpItem != null);
         StartCoroutine(Setup());

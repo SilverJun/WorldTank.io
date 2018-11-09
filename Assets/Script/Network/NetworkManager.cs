@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using DG.Tweening;
+using ExitGames.Client.Photon;
+using Photon;
 using UnityEngine;
 
-public class NetworkManager : Photon.PunBehaviour, IPunCallbacks
+public class NetworkManager : PunBehaviour
 {
     public static GameObject Tank;
     public static GameObject HP;
@@ -37,6 +40,7 @@ public class NetworkManager : Photon.PunBehaviour, IPunCallbacks
         PhotonNetwork.ConnectUsingSettings("0.1");
         Screen.SetResolution(1280, 720, false);
         _photonView = GetComponent<PhotonView>();
+
         dashboardTable = new ExitGames.Client.Photon.Hashtable();
 
         dashboardTable.Add("First", "");
@@ -68,17 +72,20 @@ public class NetworkManager : Photon.PunBehaviour, IPunCallbacks
         Debug.Log(codeAndMsg);
     }
 
-    public override void OnLeftRoom()
-    {
-        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
+    //private void OnApplicationQuit()
+    //{
+    //    PhotonNetwork.Destroy(Tank);
+    //    PhotonNetwork.Destroy(HP);
+    //    UIManager.CloseUI(PlayerName);
 
-        if (PhotonNetwork.isMasterClient)
-        {
-            var player = PhotonNetwork.playerList.First((x) => !x.IsMasterClient);
-
-            PhotonNetwork.SetMasterClient(player);
-        }
-    }
+    //    Debug.Log("ChangeMaster");
+    //    if (PhotonNetwork.isMasterClient)
+    //    {
+    //        var player = PhotonNetwork.playerList.Single((x) => !x.IsMasterClient);
+    //        Debug.LogFormat("Changed : {0}", player.NickName);
+    //        PhotonNetwork.SetMasterClient(player);
+    //    }
+    //}
 
     public static void StartPlayer()
     {
@@ -124,8 +131,9 @@ public class NetworkManager : Photon.PunBehaviour, IPunCallbacks
         PhotonNetwork.Disconnect();
     }
 
-    void IPunCallbacks.OnMasterClientSwitched(PhotonPlayer newMasterClient)
+    public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
         Debug.LogFormat("MasterClient is Changed.\nIsMasterClient? {0}", PhotonNetwork.isMasterClient);
     }
+
 }

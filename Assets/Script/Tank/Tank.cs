@@ -215,26 +215,12 @@ public class Tank : Photon.MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         var bullet = other.gameObject.GetComponent<Bullet>();
-
-        Debug.Log("OnCollisionEnter2D");
+        
         if (!other.gameObject.CompareTag("Bullet"))
-        {
             return;
-        }
-
         if (_photonView.viewID == bullet.GetOwner())
-        {
-            Debug.Log("_photonView.viewID == bullet.GetOwner()");
             return;
-        }
-
         if (bullet.IsAlreadyChecked)
-        {
-            Debug.Log("bullet.IsAlreadyChecked");
-            return;
-        }
-
-        if (!PhotonNetwork.isMasterClient)
             return;
 
         if (CheckRicochet(other))

@@ -48,4 +48,6 @@ MonoBehaviour:
   - Setup
   - FireBullet
   - UpdateScore
+  - TweenRestart
+  - TweenStart
   DisableAutoOpenWizard: 1
