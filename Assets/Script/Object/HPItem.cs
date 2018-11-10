@@ -19,10 +19,10 @@ public class HPItem : PunBehaviour, IPunObservable
 
     public void Start ()
 	{
-	    _collider.enabled = false;
+	    //_collider.enabled = false;
 	    _animPerFrame = 1.0f / (_genTime * Application.targetFrameRate);    // 크기 0-1부터, 0초 ~ 30초 (1초에 60번)
         Debug.Log(_animPerFrame);
-	    StartCoroutine(EnableItem());
+	    //StartCoroutine(EnableItem());
 	}
 
     public void FixedUpdate()
@@ -36,16 +36,19 @@ public class HPItem : PunBehaviour, IPunObservable
         _image.fillAmount += _animPerFrame;
     }
 
-    public IEnumerator EnableItem()
-    {
-        yield return new WaitUntil(()=> _image.fillAmount >= 1.0f);
-        _collider.enabled = true;
-    }
+    //public IEnumerator EnableItem()
+    //{
+    //    yield return new WaitUntil(()=> _image.fillAmount >= 1.0f);
+    //    _collider.enabled = true;
+    //}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         //if (!photonView.isMine)
         //    return;
+
+        if (_image.fillAmount < 1.0f)
+            return;
 
         if (other.CompareTag("PlayerTank") || other.CompareTag("EnemyTank"))
         {
