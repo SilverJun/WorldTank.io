@@ -44,18 +44,14 @@ public class HPItem : PunBehaviour, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if (!photonView.isMine)
-        //    return;
+		//if (!photonView.isMine)
+		//    return;
 
         if (_image.fillAmount < 1.0f)
             return;
 
-        if (other.CompareTag("PlayerTank") || other.CompareTag("EnemyTank"))
-        {
-            other.GetComponent<Tank>().Hp += _HPIncrease;
-
+		if (PhotonNetwork.isMasterClient || photonView.isMine)
             PhotonNetwork.Destroy(gameObject);
-        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -71,4 +67,9 @@ public class HPItem : PunBehaviour, IPunObservable
             _collider.enabled = (bool)stream.ReceiveNext();
         }
     }
+
+    public bool IsGen()
+	{
+		return _image.fillAmount >= 1.0f;
+	}
 }

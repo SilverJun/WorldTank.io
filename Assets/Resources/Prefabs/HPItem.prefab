@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114881476485934210}
   - component: {fileID: 58865271737738802}
   - component: {fileID: 114923931276401828}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HPItem
   m_TagString: HPItem
   m_Icon: {fileID: 0}
@@ -89,6 +89,7 @@ MonoBehaviour:
   _collider: {fileID: 58865271737738802}
   _HPIncrease: 40
   _image: {fileID: 114645462421063574}
+  _genTime: 30
 --- !u!114 &114923931276401828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,8 +112,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114881476485934210}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!212 &212145140419059128

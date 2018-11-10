@@ -4,7 +4,7 @@ public class Bullet : Photon.PunBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10.0f;
     [SerializeField] private int _damage = 10;
-    private int _viewID;
+    private int _viewID = -1;
     private Rigidbody2D _rigid;
     private PhotonView _photonView;
 
@@ -27,6 +27,7 @@ public class Bullet : Photon.PunBehaviour
         if (_photonView.isMine)
         {
             _viewID = NetworkManager.Tank.GetComponent<PhotonView>().viewID;
+			Debug.LogFormat("Bullet Owner {0}", _viewID);
             _photonView.RPC("SetOwner", PhotonTargets.All, _viewID);
         }
     }

@@ -214,15 +214,15 @@ public class Tank : Photon.MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        var bullet = other.gameObject.GetComponent<Bullet>();
-        
         if (!other.gameObject.CompareTag("Bullet"))
+            return;
+		var bullet = other.gameObject.GetComponent<Bullet>();
+		if (bullet.GetOwner() == -1)
             return;
         if (_photonView.viewID == bullet.GetOwner())
             return;
         if (bullet.IsAlreadyChecked)
             return;
-
         if (CheckRicochet(other))
         {
             /// 탄 중복충돌 방지.
@@ -252,7 +252,20 @@ public class Tank : Photon.MonoBehaviour
         Debug.Log(Hp);
     }
 
-    [PunRPC]
+	public void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.CompareTag("HPItem"))
+        {
+			var item = collision.gameObject.GetComponent<HPItem>();
+			if (item.IsGen())
+			{
+				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, _photonView.viewID);
+			}
+            return;
+        }
+	}
+
+	[PunRPC]
     void DamageHP(int damage, int viewID)
     {
         if (_photonView.viewID == viewID)
