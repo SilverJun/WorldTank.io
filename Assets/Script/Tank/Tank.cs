@@ -239,17 +239,7 @@ public class Tank : Photon.MonoBehaviour
         bullet.DisableBullet();
 
         var damage = bullet.GetDamage();
-        _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID);
-
-
-        /// 이 탄의 주인이 이 클라이언트 탱크면 이 클라이언트 탱크의 킬수를 업데이트 함
-        if (Hp <= 0 && NetworkManager.Tank.GetPhotonView().viewID == bullet.GetOwner())
-        {
-            /// KillUP!
-            NetworkManager.Kill++;
-        }
-
-        Debug.Log(Hp);
+        _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID, bullet.GetOwner());
     }
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -259,17 +249,29 @@ public class Tank : Photon.MonoBehaviour
 			var item = collision.gameObject.GetComponent<HPItem>();
 			if (item.IsGen())
 			{
-				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, _photonView.viewID);
+				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, _photonView.viewID, 0);
 			}
             return;
         }
 	}
 
 	[PunRPC]
-    void DamageHP(int damage, int viewID)
+    void DamageHP(int damage, int viewID, int bulletId)
     {
         if (_photonView.viewID == viewID)
             Hp -= damage;
+
+        if (Hp <= 0)
+        {
+			_photonView.RPC("KillCheck", PhotonTargets.All, bulletId);
+        }
     }
+
+    [PunRPC]
+    void KillCheck(int viewId)
+	{
+		if (NetworkManager.Tank.GetPhotonView().viewID == viewId)
+			NetworkManager.Kill++;
+	}
 
 }
