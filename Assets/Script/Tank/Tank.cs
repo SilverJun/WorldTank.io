@@ -207,8 +207,8 @@ public class Tank : Photon.MonoBehaviour
         /// 현재각이 최소 각보다 작을 경우 무조건 도탄
         if (theta <= _minimumAngle)
             return true;
-        if (Random.Range(0.0f, 100.0f) <= _missRatio) /// 랜덤확률로 도탄.
-            return true;
+        //if (Random.Range(0.0f, 100.0f) <= _missRatio) /// 랜덤확률로 도탄.
+        //    return true;
 
         return false;
     }
@@ -239,8 +239,7 @@ public class Tank : Photon.MonoBehaviour
         /// 탄 중복충돌 방지.
         bullet.DisableBullet();
 
-        var damage = bullet.GetDamage();
-        _photonView.RPC("DamageHP", PhotonTargets.All, damage, PhotonNetwork.player.ID, bullet.GetOwner());
+		_photonView.RPC("DamageHP", PhotonTargets.All, Hp-bullet.GetDamage(), PhotonNetwork.player.ID, bullet.GetOwner());
     }
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -250,17 +249,18 @@ public class Tank : Photon.MonoBehaviour
 			var item = collision.gameObject.GetComponent<HPItem>();
 			if (item.IsGen())
 			{
-				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, PhotonNetwork.player.ID, 0);
+				_photonView.RPC("DamageHP", PhotonTargets.All, Hp+(int)item.HPIncrease, PhotonNetwork.player.ID, 0);
 			}
             return;
         }
 	}
 
 	[PunRPC]
-    void DamageHP(int damage, int viewID, int bulletId)
+    void SetHP(int hp, int viewID, int bulletId)
     {
+		Debug.LogFormat("Damage 대상 {0} {1}", viewID, PhotonNetwork.player.ID == viewID);
         if (PhotonNetwork.player.ID == viewID)
-            Hp -= damage;
+            Hp = hp;
 
         if (Hp <= 0)
         {

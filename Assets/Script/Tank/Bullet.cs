@@ -27,7 +27,6 @@ public class Bullet : Photon.PunBehaviour
         if (_photonView.isMine)
         {
             _viewID = PhotonNetwork.player.ID;
-			Debug.LogFormat("Bullet Owner {0}", _viewID);
             _photonView.RPC("SetOwner", PhotonTargets.All, _viewID);
         }
     }
