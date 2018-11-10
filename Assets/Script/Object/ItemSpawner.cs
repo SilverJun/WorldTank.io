@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class ItemSpawner : PunBehaviour
 {
     [SerializeField] private GameObject _hpItem;
+    [SerializeField] private int _numbering;
+
 
     private void Start()
     {
@@ -25,6 +27,7 @@ public class ItemSpawner : PunBehaviour
         if (_hpItem == null)
         {
             _hpItem = PhotonNetwork.InstantiateSceneObject("Prefabs/HPItem", transform.position, Quaternion.identity, 0, null);
+            _hpItem.name = "HPItem" + _numbering;
         }
 
         yield return new WaitWhile(() => _hpItem != null);
@@ -35,5 +38,10 @@ public class ItemSpawner : PunBehaviour
     public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
     {
         StartCoroutine(Setup());
+        var item = GameObject.Find("HPItem" + _numbering);
+        if (item != null)
+        {
+            _hpItem = item;
+        }
     }
 }
