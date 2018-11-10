@@ -264,9 +264,11 @@ public class Tank : Photon.MonoBehaviour
         {
 			if (PhotonNetwork.isMasterClient)
 			{
-				var player = PhotonNetwork.otherPlayers.Single((x)=>x.ID == bulletId);
+				var player = PhotonNetwork.playerList.Single((x)=>x.ID == bulletId);
 
 				player.SetScore(player.GetScore() + 1);
+
+                PhotonNetwork.RPC(NetworkManager._photonView, "UpdateScore", PhotonTargets.All, false);
             }
         }
     }

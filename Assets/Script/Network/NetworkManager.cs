@@ -14,7 +14,7 @@ public class NetworkManager : PunBehaviour
     public static UI PlayerName;
     private static int _kill = 0;
     private static ExitGames.Client.Photon.Hashtable dashboardTable;
-    private static PhotonView _photonView;
+    public static PhotonView _photonView;
 
     public static List<PhotonPlayer> users;
 
