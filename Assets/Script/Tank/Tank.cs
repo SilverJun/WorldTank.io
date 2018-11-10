@@ -220,7 +220,7 @@ public class Tank : Photon.MonoBehaviour
 		var bullet = other.gameObject.GetComponent<Bullet>();
 		if (bullet.GetOwner() == -1)
             return;
-        if (PhotonNetwork.player.ID == bullet.GetOwner())
+        if (_photonView.ownerId == bullet.GetOwner())
             return;
         if (bullet.IsAlreadyChecked)
             return;
@@ -257,7 +257,6 @@ public class Tank : Photon.MonoBehaviour
 	[PunRPC]
     void SetHP(int hp, int viewID, int bulletId)
     {
-		Debug.LogFormat("SetHP 대상 id{0} local{1} hp{2}", viewID, _photonView.ownerId == viewID, Hp);
         if (_photonView.ownerId == viewID)
             Hp = hp;
 
