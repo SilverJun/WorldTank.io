@@ -7,7 +7,6 @@ public class Tank : Photon.MonoBehaviour
 {
     [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _barrel;
-    [SerializeField] private GameObject _body;
     [SerializeField] private GameObject _fireEffect;
     [SerializeField] private Transform _firePos;
     [SerializeField] private AudioSource _audio;

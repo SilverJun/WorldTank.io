@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class ItemSpawner : PunBehaviour
 {
     [SerializeField] private GameObject _hpItem;
-    
-    private Image _cooltimeImage;
 
     private void Start()
     {
@@ -24,14 +22,18 @@ public class ItemSpawner : PunBehaviour
         if (!PhotonNetwork.isMasterClient)
             yield break;
 
-        _hpItem = PhotonNetwork.InstantiateSceneObject("Prefabs/HPItem", transform.position, Quaternion.identity, 0, null);
-
-        //_hpItem.GetComponent<HPItem>().GenAnim(30.0f);
-        _hpItem.GetComponent<HPItem>().GenItem();
+        if (_hpItem == null)
+        {
+            _hpItem = PhotonNetwork.InstantiateSceneObject("Prefabs/HPItem", transform.position, Quaternion.identity, 0, null);
+        }
 
         yield return new WaitWhile(() => _hpItem != null);
         StartCoroutine(Setup());
     }
 
-    
+
+    public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
+    {
+        StartCoroutine(Setup());
+    }
 }

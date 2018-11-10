@@ -4,12 +4,13 @@ using Photon;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPItem : PunBehaviour//, IPunObservable
+public class HPItem : PunBehaviour, IPunObservable
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private int _HPIncrease = 40;
     [SerializeField] private Image _image;
-    [SerializeField] Sequence _sequence;
+    [SerializeField] private float _genTime = 30.0f;
+    private float _animPerFrame = 0.0f;
 
     public float HPIncrease
     {
@@ -19,10 +20,25 @@ public class HPItem : PunBehaviour//, IPunObservable
     public void Start ()
 	{
 	    _collider.enabled = false;
+	    _animPerFrame = 1.0f / (_genTime * Application.targetFrameRate);    // 크기 0-1부터, 0초 ~ 30초 (1초에 60번)
+        Debug.Log(_animPerFrame);
+	    StartCoroutine(EnableItem());
 	}
 
-    public void EnableItem()
+    public void FixedUpdate()
     {
+        if (!PhotonNetwork.isMasterClient)
+            return;
+
+        if (_image.fillAmount >= 1.0f)
+            return;
+
+        _image.fillAmount += _animPerFrame;
+    }
+
+    public IEnumerator EnableItem()
+    {
+        yield return new WaitUntil(()=> _image.fillAmount >= 1.0f);
         _collider.enabled = true;
     }
 
@@ -39,25 +55,6 @@ public class HPItem : PunBehaviour//, IPunObservable
         }
     }
 
-    public void AnimStart(float time)
-    {
-        Sequence seq = DOTween.Sequence();
-        seq.Append(_image.DOFillAmount(1.0f, time));
-        seq.AppendCallback(() =>
-        {
-            EnableItem();
-        });
-
-        _sequence = seq;
-
-        _sequence.Play();
-    }
-
-    public void GenItem()
-    {
-        photonView.RPC("TweenStart", PhotonTargets.All);
-    }
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.isWriting)
@@ -70,11 +67,5 @@ public class HPItem : PunBehaviour//, IPunObservable
             _image.fillAmount = (float)stream.ReceiveNext();
             _collider.enabled = (bool)stream.ReceiveNext();
         }
-    }
-
-    [PunRPC]
-    void TweenStart()
-    {
-        AnimStart(30.0f);
     }
 }

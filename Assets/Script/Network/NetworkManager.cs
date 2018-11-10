@@ -39,6 +39,7 @@ public class NetworkManager : PunBehaviour
     {
         PhotonNetwork.ConnectUsingSettings("0.1");
         Screen.SetResolution(1280, 720, false);
+        Application.targetFrameRate = 60;
         _photonView = GetComponent<PhotonView>();
 
         dashboardTable = new ExitGames.Client.Photon.Hashtable();
