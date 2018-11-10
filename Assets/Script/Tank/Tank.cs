@@ -87,7 +87,7 @@ public class Tank : Photon.MonoBehaviour
         if (_isDie)
         {
             UIManager.OpenUI<RespawnUI>("Prefabs/RespawnUI");
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.player);
         }
 
         _camera.transform.position =

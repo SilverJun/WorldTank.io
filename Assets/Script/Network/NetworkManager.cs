@@ -29,8 +29,8 @@ public class NetworkManager : PunBehaviour
             _kill = value;
             Debug.LogFormat("Now PlayerKill : {0}", _kill);
             PhotonNetwork.player.SetScore(_kill);
-            /// 마스터 클라이언트에 정보를 업데이트하라고 요청
-			_photonView.RPC("UpdateScore", PhotonTargets.MasterClient);
+
+			_photonView.RPC("UpdateScore", PhotonTargets.All);
         }
     }
 
