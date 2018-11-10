@@ -18,22 +18,6 @@ public class NetworkManager : PunBehaviour
 
     public static List<PhotonPlayer> users;
 
-    public static int Kill
-    {
-        get
-        {
-            return _kill;
-        }
-        set
-        {
-            _kill = value;
-            Debug.LogFormat("Now PlayerKill : {0}", _kill);
-            PhotonNetwork.player.SetScore(_kill);
-
-			_photonView.RPC("UpdateScore", PhotonTargets.All);
-        }
-    }
-
     // Use this for initialization
     private void Awake()
     {

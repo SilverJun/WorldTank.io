@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class Tank : Photon.MonoBehaviour
 {
@@ -219,7 +220,7 @@ public class Tank : Photon.MonoBehaviour
 		var bullet = other.gameObject.GetComponent<Bullet>();
 		if (bullet.GetOwner() == -1)
             return;
-        if (_photonView.viewID == bullet.GetOwner())
+        if (PhotonNetwork.player.ID == bullet.GetOwner())
             return;
         if (bullet.IsAlreadyChecked)
             return;
@@ -239,7 +240,7 @@ public class Tank : Photon.MonoBehaviour
         bullet.DisableBullet();
 
         var damage = bullet.GetDamage();
-        _photonView.RPC("DamageHP", PhotonTargets.All, damage, _photonView.viewID, bullet.GetOwner());
+        _photonView.RPC("DamageHP", PhotonTargets.All, damage, PhotonNetwork.player.ID, bullet.GetOwner());
     }
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -249,7 +250,7 @@ public class Tank : Photon.MonoBehaviour
 			var item = collision.gameObject.GetComponent<HPItem>();
 			if (item.IsGen())
 			{
-				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, _photonView.viewID, 0);
+				_photonView.RPC("DamageHP", PhotonTargets.All, -(int)item.HPIncrease, PhotonNetwork.player.ID, 0);
 			}
             return;
         }
@@ -258,20 +259,17 @@ public class Tank : Photon.MonoBehaviour
 	[PunRPC]
     void DamageHP(int damage, int viewID, int bulletId)
     {
-        if (_photonView.viewID == viewID)
+        if (PhotonNetwork.player.ID == viewID)
             Hp -= damage;
 
         if (Hp <= 0)
         {
-			_photonView.RPC("KillCheck", PhotonTargets.All, bulletId);
+			if (PhotonNetwork.isMasterClient)
+			{
+				var player = PhotonNetwork.otherPlayers.Single((x)=>x.ID == bulletId);
+
+				player.SetScore(player.GetScore() + 1);
+            }
         }
     }
-
-    [PunRPC]
-    void KillCheck(int viewId)
-	{
-		if (NetworkManager.Tank.GetPhotonView().viewID == viewId)
-			NetworkManager.Kill++;
-	}
-
 }
