@@ -239,7 +239,7 @@ public class Tank : Photon.MonoBehaviour
         /// 탄 중복충돌 방지.
         bullet.DisableBullet();
 
-		_photonView.RPC("SetHP", PhotonTargets.All, Hp-bullet.GetDamage(), PhotonNetwork.player.ID, bullet.GetOwner());
+		_photonView.RPC("SetHP", PhotonTargets.All, Hp-bullet.GetDamage(), _photonView.ownerId, bullet.GetOwner());
     }
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -249,17 +249,16 @@ public class Tank : Photon.MonoBehaviour
 			var item = collision.gameObject.GetComponent<HPItem>();
 			if (item.IsGen())
 			{
-				_photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, PhotonNetwork.player.ID, 0);
+				_photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, _photonView.ownerId, 0);
 			}
-            return;
         }
 	}
 
 	[PunRPC]
     void SetHP(int hp, int viewID, int bulletId)
     {
-		Debug.LogFormat("SetHP 대상 id{0} local{1} hp{2}", viewID, PhotonNetwork.player.ID == viewID, Hp);
-        if (PhotonNetwork.player.ID == viewID)
+		Debug.LogFormat("SetHP 대상 id{0} local{1} hp{2}", viewID, _photonView.ownerId == viewID, Hp);
+        if (_photonView.ownerId == viewID)
             Hp = hp;
 
         if (Hp <= 0)
