@@ -12,6 +12,8 @@ public class HPItem : PunBehaviour, IPunObservable
     [SerializeField] private float _genTime = 30.0f;
     private float _animPerFrame = 0.0f;
 
+    public bool IsUsed { get; set; }
+
     public float HPIncrease
     {
         get { return _HPIncrease; }
@@ -21,7 +23,7 @@ public class HPItem : PunBehaviour, IPunObservable
 	{
 	    //_collider.enabled = false;
 	    _animPerFrame = 1.0f / (_genTime * Application.targetFrameRate);    // 크기 0-1부터, 0초 ~ 30초 (1초에 60번)
-        Debug.Log(_animPerFrame);
+	    IsUsed = false;
 	    //StartCoroutine(EnableItem());
 	}
 
@@ -50,7 +52,7 @@ public class HPItem : PunBehaviour, IPunObservable
         if (_image.fillAmount < 1.0f)
             return;
 
-		if (PhotonNetwork.isMasterClient || photonView.isMine)
+        if (PhotonNetwork.isMasterClient || photonView.isMine)
             PhotonNetwork.Destroy(gameObject);
     }
 

@@ -50,4 +50,5 @@ MonoBehaviour:
   - UpdateScore
   - TweenRestart
   - TweenStart
+  - SetHP
   DisableAutoOpenWizard: 1

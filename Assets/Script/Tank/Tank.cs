@@ -247,9 +247,10 @@ public class Tank : Photon.MonoBehaviour
 		if (collision.gameObject.CompareTag("HPItem"))
         {
 			var item = collision.gameObject.GetComponent<HPItem>();
-			if (item.IsGen())
+			if (item.IsGen() && !item.IsUsed)
 			{
-				_photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, _photonView.ownerId, 0);
+			    item.IsUsed = true;
+                _photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, _photonView.ownerId, 0);
 			}
         }
 	}
