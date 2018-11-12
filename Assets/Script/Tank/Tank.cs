@@ -230,7 +230,8 @@ public class Tank : Photon.MonoBehaviour
             bullet.DisableBullet();
             /// 도탄 알림.
             Debug.Log("도탄되었습니다.");
-            PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
+            if (PhotonNetwork.isMasterClient)
+                PhotonNetwork.Instantiate("Prefabs/RicochetAlert", transform.position, Quaternion.identity, 0);
             return;
         }
 
@@ -250,7 +251,8 @@ public class Tank : Photon.MonoBehaviour
 			if (item.IsGen() && !item.IsUsed)
 			{
 			    item.IsUsed = true;
-                _photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, _photonView.ownerId, 0);
+			    if (PhotonNetwork.isMasterClient)
+                    _photonView.RPC("SetHP", PhotonTargets.All, Hp+(int)item.HPIncrease, _photonView.ownerId, 0);
 			}
         }
 	}
