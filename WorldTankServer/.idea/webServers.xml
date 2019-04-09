@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1991f650-9b43-4a60-a936-9759fb044891" name="AWS" url="http://ec2-13-124-18-33.ap-northeast-2.compute.amazonaws.com/">
+        <fileTransfer host="ec2-13-124-18-33.ap-northeast-2.compute.amazonaws.com" port="22" privateKey="$USER_HOME$/SilverJunServerKey.pem" rootFolder="/home/ubuntu/WorldTank.io" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
