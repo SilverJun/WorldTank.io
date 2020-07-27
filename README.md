@@ -3,7 +3,11 @@
 
 ## PlayNow!!
 ~~[**Join WorldTank.io**](http://silverjun.xyz:3000/)~~
-AWS 프리티어와 도메인이 만료되어서 닫았습니다...
+~~AWS 프리티어와 도메인이 만료되어서 닫았습니다...~~
+https://silverjun.itch.io/worldtankio
+
+## Video
+[youtube](https://youtu.be/AQTGv_t4itE)
 
 ## Motivation
 Kenney 스프라이트 사이트에서 tank 스프라이트 시트를 보고 갑자기 만들기 시작함
